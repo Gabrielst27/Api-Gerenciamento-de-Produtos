@@ -6,9 +6,9 @@ namespace ApiProdutos.Repositories
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        private readonly MySQLContext _context;
+        private readonly PostgreSqlDbContext _context;
 
-        public Repository(MySQLContext context)
+        public Repository(PostgreSqlDbContext context)
         {
             _context = context;
         }

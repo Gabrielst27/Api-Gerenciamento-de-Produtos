@@ -1,7 +1,6 @@
 using ApiProdutos.Context;
 using ApiProdutos.Repositories;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,10 +12,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-string mySqlConnection = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<MySQLContext>(options =>
-                    options.UseMySql(mySqlConnection,
-                    ServerVersion.AutoDetect(mySqlConnection)));
+string postgreSqlConnection = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<PostgreSqlDbContext>(options =>
+                    options.UseNpgsql(postgreSqlConnection));
+
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
