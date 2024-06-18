@@ -1,6 +1,9 @@
 using ApiProdutos.Context;
 using ApiProdutos.Repositories;
+using EvolveDb;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,9 +15,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-string postgreSqlConnection = builder.Configuration.GetConnectionString("DefaultConnection");
+string connection = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<PostgreSqlDbContext>(options =>
-                    options.UseNpgsql(postgreSqlConnection));
+                    options.UseNpgsql(connection));
+
+
 
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
@@ -26,7 +31,10 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+
+    MigrateDatabase(connection);
 }
+
 
 app.UseHttpsRedirection();
 
@@ -37,3 +45,22 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+void MigrateDatabase(string? connection)
+{
+    try
+    {
+        var evolveConnection = new Npgsql.NpgsqlConnection(connection);
+        var evolve = new Evolve(evolveConnection, Log.Information)
+        {
+            Locations = new List<string>() { "db/migrations", "db/datasets" },
+            IsEraseDisabled = true
+        };
+        evolve.Migrate();
+    }
+    catch (Exception ex)
+    {
+        Log.Error("Migração de banco de dados mal-sucedida", ex);
+        throw;
+    }
+}

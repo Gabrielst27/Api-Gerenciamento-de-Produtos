@@ -16,7 +16,7 @@ namespace ApiProdutos.Models
         [Column("amz_nome")]
         public string Nome { get; set; }
 
-        [Column("amz_nome")]
+        [Column("amz_data_cadastro")]
         public DateTime DataCadastro { get; set; }
     }
 }

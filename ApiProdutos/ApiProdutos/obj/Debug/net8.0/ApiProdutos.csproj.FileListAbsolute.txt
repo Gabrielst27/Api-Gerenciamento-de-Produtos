@@ -210,3 +210,13 @@ C:\Users\gabri\Projetos\Api-Gerenciamento-de-Produtos\ApiProdutos\ApiProdutos\ob
 C:\Users\gabri\Projetos\Api-Gerenciamento-de-Produtos\ApiProdutos\ApiProdutos\obj\Debug\net8.0\ApiProdutos.pdb
 C:\Users\gabri\Projetos\Api-Gerenciamento-de-Produtos\ApiProdutos\ApiProdutos\obj\Debug\net8.0\ApiProdutos.genruntimeconfig.cache
 C:\Users\gabri\Projetos\Api-Gerenciamento-de-Produtos\ApiProdutos\ApiProdutos\obj\Debug\net8.0\ref\ApiProdutos.dll
+C:\Users\gabri\Projetos\Api-Gerenciamento-de-Produtos\ApiProdutos\ApiProdutos\bin\Debug\net8.0\Evolve.dll
+C:\Users\gabri\Projetos\Api-Gerenciamento-de-Produtos\ApiProdutos\ApiProdutos\bin\Debug\net8.0\Serilog.dll
+C:\Users\gabri\Projetos\Api-Gerenciamento-de-Produtos\ApiProdutos\ApiProdutos\bin\Debug\net8.0\Serilog.AspNetCore.dll
+C:\Users\gabri\Projetos\Api-Gerenciamento-de-Produtos\ApiProdutos\ApiProdutos\bin\Debug\net8.0\Serilog.Extensions.Hosting.dll
+C:\Users\gabri\Projetos\Api-Gerenciamento-de-Produtos\ApiProdutos\ApiProdutos\bin\Debug\net8.0\Serilog.Extensions.Logging.dll
+C:\Users\gabri\Projetos\Api-Gerenciamento-de-Produtos\ApiProdutos\ApiProdutos\bin\Debug\net8.0\Serilog.Formatting.Compact.dll
+C:\Users\gabri\Projetos\Api-Gerenciamento-de-Produtos\ApiProdutos\ApiProdutos\bin\Debug\net8.0\Serilog.Settings.Configuration.dll
+C:\Users\gabri\Projetos\Api-Gerenciamento-de-Produtos\ApiProdutos\ApiProdutos\bin\Debug\net8.0\Serilog.Sinks.Console.dll
+C:\Users\gabri\Projetos\Api-Gerenciamento-de-Produtos\ApiProdutos\ApiProdutos\bin\Debug\net8.0\Serilog.Sinks.Debug.dll
+C:\Users\gabri\Projetos\Api-Gerenciamento-de-Produtos\ApiProdutos\ApiProdutos\bin\Debug\net8.0\Serilog.Sinks.File.dll

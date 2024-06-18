@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace ApiProdutos.Models
 {
@@ -7,6 +8,7 @@ namespace ApiProdutos.Models
     public class Produto
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("prod_id")]
         public long Id { get; set; }
 
@@ -58,14 +60,18 @@ namespace ApiProdutos.Models
         [Column("prod_estoque_total")]
         public decimal EstoqueTotal { get; set; }
 
+        [JsonIgnore]
         [Column("prod_categ_id")]
-        public long CategoriaId { get; set; }
+        public long? CategoriaId { get; set; }
 
+        [JsonIgnore]
         [Column("prod_subcateg_id")]
-        public long SubcategoriaId { get; set; }
+        public long? SubcategoriaId { get; set; }
 
+        [JsonIgnore]
         public Categoria? Categoria { get; set; }
 
+        [JsonIgnore]
         public Subcategoria? Subcategoria { get; set; }
     }
 }

@@ -19,7 +19,31 @@ namespace ApiProdutos.Controllers
         [HttpGet("{id}")]
         public ActionResult<Produto> Get(long id)
         {
-            var produto = _repository.GetById(p => p.Id == id);
+            var produto = _repository.Get(p => p.Id == id);
+            return Ok(produto);
+        }
+
+        [HttpGet]
+        public ActionResult<IEnumerable<Produto>> GetAll()
+        {
+            return Ok(_repository.GetAll());
+        }
+
+        [HttpPost]
+        public ActionResult<Produto> Post([FromBody] Produto produto)
+        {
+            if (produto is null) return BadRequest("Dados inválidos");
+
+            _repository.Create(produto);
+            return Ok(produto);
+        }
+
+        [HttpPut]
+        public ActionResult<Produto> Put([FromBody] Produto produto)
+        {
+            if (_repository is null) return BadRequest("Dados inválidos");
+
+            _repository.Update(produto);
             return Ok(produto);
         }
 
