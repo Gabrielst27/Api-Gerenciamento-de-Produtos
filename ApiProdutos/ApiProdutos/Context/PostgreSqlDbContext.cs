@@ -11,6 +11,6 @@ namespace ApiProdutos.Context
         public DbSet<Categoria> Categorias { get; set; }
         public DbSet<Subcategoria> Subcategorias { get; set; }
         public DbSet<Armazem> Armazens { get; set; }
-        public DbSet<ListaArmazemProduto> ListasAmzProd { get; set;}
+        public DbSet<ItemArmazem> ListasAmzProd { get; set;}
     }
 }

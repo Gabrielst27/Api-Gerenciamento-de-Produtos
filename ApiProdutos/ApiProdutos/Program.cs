@@ -56,6 +56,7 @@ void MigrateDatabase(string? connection)
             Locations = new List<string>() { "db/migrations", "db/datasets" },
             IsEraseDisabled = true
         };
+
         evolve.Migrate();
     }
     catch (Exception ex)

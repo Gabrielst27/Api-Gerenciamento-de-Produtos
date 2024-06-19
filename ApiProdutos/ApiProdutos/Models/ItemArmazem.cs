@@ -4,8 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace ApiProdutos.Models
 {
 
-    [Table("lista_armazens_produtos")]
-    public class ListaArmazemProduto
+    [Table("item_armazens")]
+    public class ItemArmazem
     {
 
         [Key]
