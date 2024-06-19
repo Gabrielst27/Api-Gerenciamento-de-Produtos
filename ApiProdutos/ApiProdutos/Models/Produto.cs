@@ -30,7 +30,7 @@ namespace ApiProdutos.Models
         public float Peso { get; set; }
 
         [Column("prod_largura")]
-        public float Lagura { get; set; }
+        public float Largura { get; set; }
 
         [Column("prod_comprimento")]
         public float Comprimento { get; set; }

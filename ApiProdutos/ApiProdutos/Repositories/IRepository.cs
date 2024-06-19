@@ -8,7 +8,7 @@ namespace ApiProdutos.Repositories
         T? Get(Expression<Func<T, bool>> predicate);
         IEnumerable<T?> GetAll();
         T? Create(T entity);
-
         T? Update(T entity);
+        T? Delete(Expression<Func<T, bool>> predicate);
     }
 }

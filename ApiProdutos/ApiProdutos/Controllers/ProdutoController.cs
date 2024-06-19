@@ -17,7 +17,7 @@ namespace ApiProdutos.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Produto> Get(long id)
+        public ActionResult<Produto> Get([FromRoute] long id)
         {
             var produto = _repository.Get(p => p.Id == id);
             return Ok(produto);
@@ -41,10 +41,18 @@ namespace ApiProdutos.Controllers
         [HttpPut]
         public ActionResult<Produto> Put([FromBody] Produto produto)
         {
-            if (_repository is null) return BadRequest("Dados inválidos");
+            if (produto is null) return BadRequest("Dados inválidos");
 
             _repository.Update(produto);
             return Ok(produto);
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult<Produto> Delete([FromRoute] long id)
+        {
+            var produto = _repository.Get(p => p.Id == id);
+            _repository.Delete(p => p.Id == id);
+            return Ok();
         }
 
     }
