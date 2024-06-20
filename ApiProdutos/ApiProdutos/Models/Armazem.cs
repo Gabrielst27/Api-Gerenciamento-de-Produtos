@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace ApiProdutos.Models
 {
@@ -8,6 +9,7 @@ namespace ApiProdutos.Models
     public class Armazem
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("amz_id")]
         public long Id { get; set; }
 
@@ -18,5 +20,8 @@ namespace ApiProdutos.Models
 
         [Column("amz_data_cadastro")]
         public DateTime DataCadastro { get; set; }
+
+        [JsonIgnore]
+        public List<ItemArmazem>? ItemArmazem { get; set; }
     }
 }

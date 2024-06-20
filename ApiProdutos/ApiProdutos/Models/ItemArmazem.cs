@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace ApiProdutos.Models
 {
@@ -9,6 +10,7 @@ namespace ApiProdutos.Models
     {
 
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("amzprod_id")]
         public long Id { get; set; }
 
@@ -24,8 +26,10 @@ namespace ApiProdutos.Models
         [Column("amzprod_quant")]
         public int Quantidade { get; set; }
 
+        [JsonIgnore]
         public Produto? Produto { get; set; }
 
+        [JsonIgnore]
         public Armazem? Armazem { get; set; }
     }
 }

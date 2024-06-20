@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ApiProdutos.Repositories;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
@@ -60,11 +61,9 @@ namespace ApiProdutos.Models
         [Column("prod_estoque_total")]
         public decimal EstoqueTotal { get; set; }
 
-        [JsonIgnore]
         [Column("prod_categ_id")]
         public long? CategoriaId { get; set; }
 
-        [JsonIgnore]
         [Column("prod_subcateg_id")]
         public long? SubcategoriaId { get; set; }
 
@@ -73,5 +72,8 @@ namespace ApiProdutos.Models
 
         [JsonIgnore]
         public Subcategoria? Subcategoria { get; set; }
+
+        [JsonIgnore]
+        public List<ItemArmazem>? ItemArmazem { get; set; }
     }
 }

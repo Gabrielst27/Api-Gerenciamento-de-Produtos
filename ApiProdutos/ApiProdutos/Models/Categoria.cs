@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace ApiProdutos.Models
 {
@@ -7,6 +8,7 @@ namespace ApiProdutos.Models
     public class Categoria
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("categ_id")]
         public long Id { get; set; }
 
@@ -26,5 +28,11 @@ namespace ApiProdutos.Models
 
         [Column("categ_data_cadastro")]
         public DateTime DataCadastro { get; set; }
+
+        [JsonIgnore]
+        public List<Subcategoria>? Subcategorias { get; set; }
+
+        [JsonIgnore]
+        public List<Produto>? Produtos { get; set; }
     }
 }

@@ -12,5 +12,6 @@ namespace ApiProdutos.Context
         public DbSet<Subcategoria> Subcategorias { get; set; }
         public DbSet<Armazem> Armazens { get; set; }
         public DbSet<ItemArmazem> ListasAmzProd { get; set;}
+        public DbSet<Fornecedor> Fornecedor { get; set; }
     }
 }
