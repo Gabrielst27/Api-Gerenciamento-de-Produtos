@@ -2,7 +2,6 @@ using ApiProdutos.Context;
 using ApiProdutos.Repositories;
 using EvolveDb;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualBasic;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
