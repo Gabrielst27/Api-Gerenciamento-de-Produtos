@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS public.fornecedores
 (
     fornec_id bigint NOT NULL DEFAULT nextval('fornecedores_fornec_id_seq'::regclass),
     fornec_codinterno character varying(30) COLLATE pg_catalog."default" NOT NULL,
-    fornec_cnpj integer NOT NULL,
+    fornec_cnpj character varying(14) COLLATE pg_catalog."default" NOT NULL,
     fornec_razao_social character varying(60) COLLATE pg_catalog."default" NOT NULL,
     fornec_fantasia character varying(60) COLLATE pg_catalog."default",
     fornec_status character varying(10) COLLATE pg_catalog."default" NOT NULL,

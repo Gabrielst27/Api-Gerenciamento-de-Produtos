@@ -20,8 +20,9 @@ namespace ApiProdutos.Models
         public string Codinterno { get; set; }
 
         [Required]
+        [StringLength(14, ErrorMessage = "O cnpj deve ter 14 caracteres, somente numeros")]
         [Column("fornec_cnpj")]
-        public int Cnpj { get; set; }
+        public string Cnpj { get; set; }
 
         [Required]
         [StringLength(60, ErrorMessage = "A razao social deve ter entre 3 e 60 caracteres", MinimumLength = 3)]
@@ -41,8 +42,9 @@ namespace ApiProdutos.Models
         public DateTime DataCadastro { get; set; }
 
         [Required]
+        [StringLength(8, ErrorMessage = "O CEP deve ter 8 caracteres")]
         [Column("fornec_cep")]
-        public int Cep { get; set; }
+        public string Cep { get; set; }
 
         [Required]
         [StringLength(60, ErrorMessage = "O logradouro deve ter até 60 caracteres", MinimumLength = 1)]
@@ -79,12 +81,12 @@ namespace ApiProdutos.Models
 
         [Required]
         [Column("fornec_tel1")]
-        public int Telefone1 { get; set; }
+        public long Telefone1 { get; set; }
 
         [Column("fornec_tel2")]
-        public int Telefone2 { get; set; }
+        public long Telefone2 { get; set; }
 
         [Column("fornec_tel3")]
-        public int Telefone3 { get; set; }
+        public long Telefone3 { get; set; }
     }
 }
