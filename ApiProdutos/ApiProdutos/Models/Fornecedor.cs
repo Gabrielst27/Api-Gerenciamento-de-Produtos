@@ -34,7 +34,6 @@ namespace ApiProdutos.Models
         public string Fantasia { get; set; }
 
         [Required]
-        [JsonConverter(typeof(JsonStringEnumConverter))]
         [Column("fornec_status")]
         public StatusFornecedor Status { get; set; }
 

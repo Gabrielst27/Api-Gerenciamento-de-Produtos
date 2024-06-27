@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS public.fornecedores
     fornec_cnpj character varying(14) COLLATE pg_catalog."default" NOT NULL,
     fornec_razao_social character varying(60) COLLATE pg_catalog."default" NOT NULL,
     fornec_fantasia character varying(60) COLLATE pg_catalog."default",
-    fornec_status character varying(10) COLLATE pg_catalog."default" NOT NULL,
+    fornec_status integer NOT NULL,
     fornec_data_cadastro timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
     fornec_cep character varying(8) COLLATE pg_catalog."default" NOT NULL,
     fornec_logradouro character varying(60) COLLATE pg_catalog."default" NOT NULL,
@@ -22,7 +22,5 @@ CREATE TABLE IF NOT EXISTS public.fornecedores
     fornec_tel1 bigint NOT NULL,
     fornec_tel2 bigint,
     fornec_tel3 bigint,
-    fornec_categ_id bigint,
-    fornec_subcateg_id bigint,
     CONSTRAINT fornecedores_pkey PRIMARY KEY (fornec_id)
 )

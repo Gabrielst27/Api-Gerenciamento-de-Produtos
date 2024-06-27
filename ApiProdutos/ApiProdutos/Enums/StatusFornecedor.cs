@@ -2,7 +2,7 @@
 {
     public enum StatusFornecedor
     {
-        ATIVO,
-        INATIVO
+        INATIVO = 0,
+        ATIVO = 1
     }
 }

@@ -15,7 +15,7 @@ namespace ApiProdutos.Models
         public long Id { get; set; }
 
         [Required]
-        [Column("fornecprod_id")]
+        [Column("fornecprod_quant")]
         public int Quantidade { get; set; }
 
         [Required]
@@ -30,6 +30,6 @@ namespace ApiProdutos.Models
         public Produto? Produto { get; set; }
 
         [JsonIgnore]
-        public Fornecedor? Fornecedor { get; set; }
+        public Fornecedor? Fornec { get; set; }
     }
 }
