@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS public.subcategorias
     subcateg_data_cadastro timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
     subcateg_categ_id bigint NOT NULL,
     CONSTRAINT subcategorias_pkey PRIMARY KEY (subcateg_id),
-    CONSTRAINT subcategorias_subcateg_categ_id_fkey FOREIGN KEY (subcateg_categ_id)
+    CONSTRAINT subcategorias_fkey FOREIGN KEY (subcateg_categ_id)
         REFERENCES public.categorias (categ_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION

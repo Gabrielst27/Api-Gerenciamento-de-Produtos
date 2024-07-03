@@ -15,8 +15,8 @@ CREATE TABLE IF NOT EXISTS public.produtos
     prod_cor_principal character varying(30) COLLATE pg_catalog."default",
     prod_cor_secundaria character varying(30) COLLATE pg_catalog."default",
     prod_data_cadastro timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    prod_preco_custo numeric(15,0) NOT NULL,
-    prod_preco_min numeric(15,0) NOT NULL,
+    prod_preco_custo decimal(12,2) NOT NULL,
+    prod_preco_min decimal(12,2) NOT NULL,
     prod_estoque_total integer,
     prod_categ_id bigint,
     prod_subcateg_id bigint,
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS public.produtos
         REFERENCES public.categorias (categ_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT produtos_prod_subcateg_id_fkey FOREIGN KEY (prod_subcateg_id)
+    CONSTRAINT produtos_prod_subcateg_fkey FOREIGN KEY (prod_subcateg_id)
         REFERENCES public.subcategorias (subcateg_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
