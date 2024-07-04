@@ -14,5 +14,11 @@ CREATE TABLE IF NOT EXISTS public.contratos
     contr_data_inicial timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
     contr_dia_cobranca timestamp without time zone NOT NULL,
     contr_data_expira timestamp without time zone NOT NULL,
-    CONSTRAINT contratos_pkey PRIMARY KEY (contr_id)
+    contr_status integer NOT NULL,
+    contr_emp_id bigint NOT NULL,
+    CONSTRAINT contratos_pkey PRIMARY KEY (contr_id),
+    CONSTRAINT contratos_contr_emp_id_fkey FOREIGN KEY (contr_emp_id)
+    REFERENCES public.fornecedores (fornec_id)
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
 )

@@ -13,6 +13,7 @@ namespace ApiProdutos.Context
         public DbSet<Armazem> Armazens { get; set; }
         public DbSet<ItemArmazem> ItensAmzProd { get; set;}
         public DbSet<ItemContrato> ItemContratos { get; set; }
-        public DbSet<Fornecedor> Fornecedor { get; set; }
+        public DbSet<Fornecedor> Fornecedores { get; set; }
+        public DbSet<Contrato> Contratos { get; set; }
     }
 }

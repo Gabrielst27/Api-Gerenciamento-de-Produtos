@@ -23,10 +23,5 @@ CREATE TABLE IF NOT EXISTS public.fornecedores
     fornec_tel2 bigint,
     fornec_tel3 bigint,
     fornec_email character varying(60) COLLATE pg_catalog."default" NOT NULL,
-    fornec_contr_id bigint NOT NULL,
-    CONSTRAINT fornecedores_pkey PRIMARY KEY (fornec_id),
-    CONSTRAINT fornecedores_fornec_contr_id_fkey FOREIGN KEY (fornec_contr_id)
-        REFERENCES public.contratos (contr_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+    CONSTRAINT fornecedores_pkey PRIMARY KEY (fornec_id)
 )

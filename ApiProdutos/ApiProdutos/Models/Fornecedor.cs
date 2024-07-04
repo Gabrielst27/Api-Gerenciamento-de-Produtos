@@ -91,11 +91,7 @@ namespace ApiProdutos.Models
         [Column("fornec_email")]
         public string? Email { get; set; }
 
-        [Required]
-        [Column("fornec_contr_id")]
-        public long ContrId { get; set; }
-
         [JsonIgnore]
-        public Contrato? Contrato { get; set; }
+        public List<Contrato>? Contratos { get; set; }
     }
 }

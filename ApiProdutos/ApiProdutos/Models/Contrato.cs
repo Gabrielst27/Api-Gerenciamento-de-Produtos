@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ApiProdutos.Enums;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
@@ -14,7 +15,7 @@ namespace ApiProdutos.Models
 
         [Required]
         [StringLength(30, ErrorMessage = "O codigo interno do contrato deve ter entre 1 e 30 caracteres", MinimumLength = 1)]
-        [Column("contr_codint")]
+        [Column("contr_codinterno")]
         public string CodigoInterno { get; set; }
 
         [Required]
@@ -48,6 +49,10 @@ namespace ApiProdutos.Models
         [Required]
         [Column("contr_data_expira")]
         public DateTime DataExpira { get; set; }
+
+        [Required]
+        [Column("contr_status")]
+        public StatusContrato Status { get; set; }
 
         [Required]
         [Column("contr_emp_id")]
