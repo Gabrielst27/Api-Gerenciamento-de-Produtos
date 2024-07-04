@@ -54,7 +54,7 @@ namespace ApiProdutos.Models
         [Column("fornec_numero")]
         public int Numero { get; set; }
 
-        [StringLength(60, ErrorMessage = "O complemento deve ter até 60 caracteres", MinimumLength = 1)]
+        [StringLength(60, ErrorMessage = "O complemento deve ter até 60 caracteres")]
         [Column("fornec_complemento")]
         public string Complemento { get; set; }
 
@@ -87,5 +87,15 @@ namespace ApiProdutos.Models
 
         [Column("fornec_tel3")]
         public long Telefone3 { get; set; }
+
+        [Column("fornec_email")]
+        public string? Email { get; set; }
+
+        [Required]
+        [Column("fornec_contr_id")]
+        public long ContrId { get; set; }
+
+        [JsonIgnore]
+        public Contrato? Contrato { get; set; }
     }
 }

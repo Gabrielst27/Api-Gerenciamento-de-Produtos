@@ -3,7 +3,7 @@ using ApiProdutos.Repositories;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ApiCategorias.Controllers
+namespace ApiProdutos.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
