@@ -1,5 +1,6 @@
 ﻿using ApiProdutos.Models;
 using ApiProdutos.Repositories;
+using ApiProdutos.Validations;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,6 +33,8 @@ namespace ApiProdutos.Controllers
         [HttpPost]
         public ActionResult<Categoria> Post([FromBody] Categoria categoria)
         {
+            categoria.Nome = PrimeiraMaiuscula.Corrigir(categoria.Nome);
+
             if (categoria is null) return BadRequest("Dados inválidos");
 
             _repository.Create(categoria);
@@ -41,6 +44,8 @@ namespace ApiProdutos.Controllers
         [HttpPut]
         public ActionResult<Categoria> Put([FromBody] Categoria categoria)
         {
+            categoria.Nome = PrimeiraMaiuscula.Corrigir(categoria.Nome);
+
             if (categoria is null) return BadRequest("Dados inválidos");
 
             _repository.Update(categoria);

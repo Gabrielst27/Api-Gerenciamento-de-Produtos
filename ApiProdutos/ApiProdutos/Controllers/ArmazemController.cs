@@ -1,5 +1,6 @@
 ﻿using ApiProdutos.Models;
 using ApiProdutos.Repositories;
+using ApiProdutos.Validations;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,6 +33,8 @@ namespace ApiProdutos.Controllers
         [HttpPost]
         public ActionResult<Armazem> Post([FromBody] Armazem armazem)
         {
+            armazem.Nome = PrimeiraMaiuscula.Corrigir(armazem.Nome);
+
             if (armazem is null) return BadRequest("Dados inválidos");
 
             _repository.Create(armazem);
@@ -41,6 +44,8 @@ namespace ApiProdutos.Controllers
         [HttpPut]
         public ActionResult<Armazem> Put([FromBody] Armazem armazem)
         {
+            armazem.Nome = PrimeiraMaiuscula.Corrigir(armazem.Nome);
+
             if (armazem is null) return BadRequest("Dados inválidos");
 
             _repository.Update(armazem);

@@ -1,7 +1,9 @@
 ﻿using ApiProdutos.Models;
 using ApiProdutos.Repositories;
+using ApiProdutos.Validations;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics.Contracts;
 
 namespace ApiProdutos.Controllers
 {
@@ -32,6 +34,15 @@ namespace ApiProdutos.Controllers
         [HttpPost]
         public ActionResult<Fornecedor> Post([FromBody] Fornecedor fornecedor)
         {
+            fornecedor.RazaoSocial = PrimeiraMaiuscula.Corrigir(fornecedor.RazaoSocial);
+            fornecedor.Fantasia = PrimeiraMaiuscula.Corrigir(fornecedor.Fantasia);
+            fornecedor.Logradouro = PrimeiraMaiuscula.Corrigir(fornecedor.Logradouro);
+            fornecedor.Bairro = PrimeiraMaiuscula.Corrigir(fornecedor.Bairro);
+            fornecedor.Complemento = PrimeiraMaiuscula.Corrigir(fornecedor.Complemento);
+            fornecedor.Cidade = PrimeiraMaiuscula.Corrigir(fornecedor.Cidade);
+            fornecedor.Uf.ToUpper();
+            fornecedor.Pais = PrimeiraMaiuscula.Corrigir(fornecedor.Pais);
+
             if (fornecedor is null) return BadRequest("Dados inválidos");
 
             _repository.Create(fornecedor);
@@ -41,6 +52,15 @@ namespace ApiProdutos.Controllers
         [HttpPut]
         public ActionResult<Fornecedor> Put([FromBody] Fornecedor fornecedor)
         {
+            fornecedor.RazaoSocial = PrimeiraMaiuscula.Corrigir(fornecedor.RazaoSocial);
+            fornecedor.Fantasia = PrimeiraMaiuscula.Corrigir(fornecedor.Fantasia);
+            fornecedor.Logradouro = PrimeiraMaiuscula.Corrigir(fornecedor.Logradouro);
+            fornecedor.Bairro = PrimeiraMaiuscula.Corrigir(fornecedor.Bairro);
+            fornecedor.Complemento = PrimeiraMaiuscula.Corrigir(fornecedor.Complemento);
+            fornecedor.Cidade = PrimeiraMaiuscula.Corrigir(fornecedor.Cidade);
+            fornecedor.Uf.ToUpper();
+            fornecedor.Pais = PrimeiraMaiuscula.Corrigir(fornecedor.Pais);
+
             if (fornecedor is null) return BadRequest("Dados inválidos");
 
             _repository.Update(fornecedor);
