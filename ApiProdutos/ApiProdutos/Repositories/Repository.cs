@@ -21,13 +21,12 @@ namespace ApiProdutos.Repositories
 
         public IEnumerable<T?> GetAll()
         {
-            return _context.Set<T>().ToList();
+            return _context.Set<T>().AsNoTracking().ToList();
         }
 
         public T? Create(T entity)
         {
             _context.Set<T>().Add(entity);
-            _context.SaveChanges();
 
             return entity;
         }
@@ -35,7 +34,6 @@ namespace ApiProdutos.Repositories
         public T? Update(T entity)
         {
             _context.Set<T>().Entry(entity).State = EntityState.Modified;
-            _context.SaveChanges();
 
             return entity;
         }
@@ -44,7 +42,6 @@ namespace ApiProdutos.Repositories
         {
             var entity = _context.Set<T>().AsNoTracking().FirstOrDefault(predicate);
             _context.Remove(entity);
-            _context.SaveChanges();
 
             return entity;
         }
