@@ -11,24 +11,24 @@ namespace ApiProdutos.Controllers
     [ApiController]
     public class FornecedorController : ControllerBase
     {
-        private readonly IRepository<Fornecedor> _repository;
+        private readonly IUnitOfWork _uof;
 
-        public FornecedorController(IRepository<Fornecedor> repository)
+        public FornecedorController(IUnitOfWork uof)
         {
-            _repository = repository;
+            _uof = uof;
         }
 
         [HttpGet("{id}")]
         public ActionResult<Fornecedor> Get([FromRoute] long id)
         {
-            var fornecedor = _repository.Get(p => p.Id == id);
+            var fornecedor = _uof.FornecedorRepository.Get(p => p.Id == id);
             return Ok(fornecedor);
         }
 
         [HttpGet]
         public ActionResult<IEnumerable<Fornecedor>> GetAll()
         {
-            return Ok(_repository.GetAll());
+            return Ok(_uof.FornecedorRepository.GetAll());
         }
 
         [HttpPost]
@@ -40,12 +40,13 @@ namespace ApiProdutos.Controllers
             fornecedor.Bairro = PrimeiraMaiuscula.Corrigir(fornecedor.Bairro);
             fornecedor.Complemento = PrimeiraMaiuscula.Corrigir(fornecedor.Complemento);
             fornecedor.Cidade = PrimeiraMaiuscula.Corrigir(fornecedor.Cidade);
-            fornecedor.Uf.ToUpper();
+            fornecedor.Uf = fornecedor.Uf.ToUpper();
             fornecedor.Pais = PrimeiraMaiuscula.Corrigir(fornecedor.Pais);
 
             if (fornecedor is null) return BadRequest("Dados inválidos");
 
-            _repository.Create(fornecedor);
+            _uof.FornecedorRepository.Create(fornecedor);
+            _uof.Commit();
             return Ok(fornecedor);
         }
 
@@ -63,15 +64,17 @@ namespace ApiProdutos.Controllers
 
             if (fornecedor is null) return BadRequest("Dados inválidos");
 
-            _repository.Update(fornecedor);
+            _uof.FornecedorRepository.Update(fornecedor);
+            _uof.Commit();
             return Ok(fornecedor);
         }
 
         [HttpDelete("{id}")]
         public ActionResult<Fornecedor> Delete([FromRoute] long id)
         {
-            var fornecedor = _repository.Get(p => p.Id == id);
-            _repository.Delete(p => p.Id == id);
+            var fornecedor = _uof.FornecedorRepository.Get(p => p.Id == id);
+            _uof.FornecedorRepository.Delete(p => p.Id == id);
+            _uof.Commit();
             return Ok(fornecedor);
         }
 

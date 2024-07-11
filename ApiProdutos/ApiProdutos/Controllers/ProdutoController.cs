@@ -10,24 +10,24 @@ namespace ApiProdutos.Controllers
     [ApiController]
     public class ProdutoController : ControllerBase
     {
-        private readonly IRepository<Produto> _repository;
+        private readonly IUnitOfWork _uof;
 
-        public ProdutoController(IRepository<Produto> repository)
+        public ProdutoController(IUnitOfWork uof)
         {
-            _repository = repository;
+            _uof = uof;
         }
 
         [HttpGet("{id}")]
         public ActionResult<Produto> Get([FromRoute] long id)
         {
-            var produto = _repository.Get(p => p.Id == id);
+            var produto = _uof.ProdutoRepository.Get(p => p.Id == id);
             return Ok(produto);
         }
 
         [HttpGet]
         public ActionResult<IEnumerable<Produto>> GetAll()
         {
-            return Ok(_repository.GetAll());
+            return Ok(_uof.ProdutoRepository.GetAll());
         }
 
         [HttpPost]
@@ -38,7 +38,8 @@ namespace ApiProdutos.Controllers
 
             if (produto is null) return BadRequest("Dados inválidos");
 
-            _repository.Create(produto);
+            _uof.ProdutoRepository.Create(produto);
+            _uof.Commit();
             return Ok(produto);
         }
 
@@ -50,15 +51,17 @@ namespace ApiProdutos.Controllers
 
             if (produto is null) return BadRequest("Dados inválidos");
 
-            _repository.Update(produto);
+            _uof.ProdutoRepository.Update(produto);
+            _uof.Commit();
             return Ok(produto);
         }
 
         [HttpDelete("{id}")]
         public ActionResult<Produto> Delete([FromRoute] long id)
         {
-            var produto = _repository.Get(p => p.Id == id);
-            _repository.Delete(p => p.Id == id);
+            var produto = _uof.ProdutoRepository.Get(p => p.Id == id);
+            _uof.ProdutoRepository.Delete(p => p.Id == id);
+            _uof.Commit();
             return Ok();
         }
 

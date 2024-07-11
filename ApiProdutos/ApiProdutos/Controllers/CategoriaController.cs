@@ -10,24 +10,24 @@ namespace ApiProdutos.Controllers
     [ApiController]
     public class CategoriaController : ControllerBase
     {
-        private readonly IRepository<Categoria> _repository;
+        private readonly IUnitOfWork _uof;
 
-        public CategoriaController(IRepository<Categoria> repository)
+        public CategoriaController(IUnitOfWork uof)
         {
-            _repository = repository;
+            _uof = uof;
         }
 
         [HttpGet("{id}")]
         public ActionResult<Categoria> Get([FromRoute] long id)
         {
-            var categoria = _repository.Get(p => p.Id == id);
+            var categoria = _uof.CategoriaRepository.Get(p => p.Id == id);
             return Ok(categoria);
         }
 
         [HttpGet]
         public ActionResult<IEnumerable<Categoria>> GetAll()
         {
-            return Ok(_repository.GetAll());
+            return Ok(_uof.CategoriaRepository.GetAll());
         }
 
         [HttpPost]
@@ -37,7 +37,8 @@ namespace ApiProdutos.Controllers
 
             if (categoria is null) return BadRequest("Dados inválidos");
 
-            _repository.Create(categoria);
+            _uof.CategoriaRepository.Create(categoria);
+            _uof.Commit();
             return Ok(categoria);
         }
 
@@ -48,15 +49,17 @@ namespace ApiProdutos.Controllers
 
             if (categoria is null) return BadRequest("Dados inválidos");
 
-            _repository.Update(categoria);
+            _uof.CategoriaRepository.Update(categoria);
+            _uof.Commit();
             return Ok(categoria);
         }
 
         [HttpDelete("{id}")]
         public ActionResult<Categoria> Delete([FromRoute] long id)
         {
-            var categoria = _repository.Get(p => p.Id == id);
-            _repository.Delete(p => p.Id == id);
+            var categoria = _uof.CategoriaRepository.Get(p => p.Id == id);
+            _uof.CategoriaRepository.Delete(p => p.Id == id);
+            _uof.Commit();
             return Ok(categoria);
         }
 

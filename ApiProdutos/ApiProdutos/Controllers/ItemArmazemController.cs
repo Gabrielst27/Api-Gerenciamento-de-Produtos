@@ -9,24 +9,24 @@ namespace ApiProdutos.Controllers
     [ApiController]
     public class ItemArmazemController : ControllerBase
     {
-        private readonly IRepository<ItemArmazem> _repository;
+        private readonly IUnitOfWork _uof;
 
-        public ItemArmazemController(IRepository<ItemArmazem> repository)
+        public ItemArmazemController(IUnitOfWork uof)
         {
-            _repository = repository;
+            _uof = uof;
         }
 
         [HttpGet("{id}")]
         public ActionResult<ItemArmazem> Get([FromRoute] long id)
         {
-            var itemArmazem = _repository.Get(p => p.Id == id);
+            var itemArmazem = _uof.ItemArmazemRepository.Get(p => p.Id == id);
             return Ok(itemArmazem);
         }
 
         [HttpGet]
         public ActionResult<IEnumerable<ItemArmazem>> GetAll()
         {
-            return Ok(_repository.GetAll());
+            return Ok(_uof.ItemArmazemRepository.GetAll());
         }
 
         [HttpPost]
@@ -34,7 +34,8 @@ namespace ApiProdutos.Controllers
         {
             if (itemArmazem is null) return BadRequest("Dados inválidos");
 
-            _repository.Create(itemArmazem);
+            _uof.ItemArmazemRepository.Create(itemArmazem);
+            _uof.Commit();
             return Ok(itemArmazem);
         }
 
@@ -43,15 +44,17 @@ namespace ApiProdutos.Controllers
         {
             if (itemArmazem is null) return BadRequest("Dados inválidos");
 
-            _repository.Update(itemArmazem);
+            _uof.ItemArmazemRepository.Update(itemArmazem);
+            _uof.Commit();
             return Ok(itemArmazem);
         }
 
         [HttpDelete("{id}")]
         public ActionResult<ItemArmazem> Delete([FromRoute] long id)
         {
-            var itemArmazem = _repository.Get(p => p.Id == id);
-            _repository.Delete(p => p.Id == id);
+            var itemArmazem = _uof.ItemArmazemRepository.Get(p => p.Id == id);
+            _uof.ItemArmazemRepository.Delete(p => p.Id == id);
+            _uof.Commit();
             return Ok(itemArmazem);
         }
 

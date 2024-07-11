@@ -10,24 +10,24 @@ namespace ApiProdutos.Controllers
     [ApiController]
     public class SubcategoriaController : ControllerBase
     {
-        private readonly IRepository<Subcategoria> _repository;
+        private readonly IUnitOfWork _uof;
 
-        public SubcategoriaController(IRepository<Subcategoria> repository)
+        public SubcategoriaController(IUnitOfWork uof)
         {
-            _repository = repository;
+            _uof = uof;
         }
 
         [HttpGet("{id}")]
         public ActionResult<Subcategoria> Get([FromRoute] long id)
         {
-            var subcategoria = _repository.Get(p => p.Id == id);
+            var subcategoria = _uof.SubcategoriaRepository.Get(p => p.Id == id);
             return Ok(subcategoria);
         }
 
         [HttpGet]
         public ActionResult<IEnumerable<Subcategoria>> GetAll()
         {
-            return Ok(_repository.GetAll());
+            return Ok(_uof.SubcategoriaRepository.GetAll());
         }
 
         [HttpPost]
@@ -37,7 +37,8 @@ namespace ApiProdutos.Controllers
 
             if (subcategoria is null) return BadRequest("Dados inválidos");
 
-            _repository.Create(subcategoria);
+            _uof.SubcategoriaRepository.Create(subcategoria);
+            _uof.Commit();
             return Ok(subcategoria);
         }
 
@@ -48,15 +49,17 @@ namespace ApiProdutos.Controllers
 
             if (subcategoria is null) return BadRequest("Dados inválidos");
 
-            _repository.Update(subcategoria);
+            _uof.SubcategoriaRepository.Update(subcategoria);
+            _uof.Commit();
             return Ok(subcategoria);
         }
 
         [HttpDelete("{id}")]
         public ActionResult<Subcategoria> Delete([FromRoute] long id)
         {
-            var subcategoria = _repository.Get(p => p.Id == id);
-            _repository.Delete(p => p.Id == id);
+            var subcategoria = _uof.SubcategoriaRepository.Get(p => p.Id == id);
+            _uof.SubcategoriaRepository.Delete(p => p.Id == id);
+            _uof.Commit();
             return Ok(subcategoria);
         }
 

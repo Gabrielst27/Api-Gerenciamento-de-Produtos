@@ -31,7 +31,7 @@ namespace ApiProdutos.Repositories
 
         public IRepository<ItemArmazem> ItemArmazemRepository => _itemArmazemRep ?? new Repository<ItemArmazem>(_context);
 
-        public IRepository<ItemContrato> itemContratoRepository => _itemContratoRep ?? new Repository<ItemContrato>(_context);
+        public IRepository<ItemContrato> ItemContratoRepository => _itemContratoRep ?? new Repository<ItemContrato>(_context);
 
         public IRepository<Produto> ProdutoRepository => _produtoRep ?? new Repository<Produto>(_context);
 

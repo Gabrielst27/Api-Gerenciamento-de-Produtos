@@ -10,24 +10,24 @@ namespace ApiProdutos.Controllers
     [ApiController]
     public class ArmazemController : ControllerBase
     {
-        private readonly IRepository<Armazem> _repository;
+        private readonly IUnitOfWork _uof;
 
-        public ArmazemController(IRepository<Armazem> repository)
+        public ArmazemController(IUnitOfWork unitOfWork)
         {
-            _repository = repository;
+            _uof = unitOfWork;
         }
 
         [HttpGet("{id}")]
         public ActionResult<Armazem> Get([FromRoute] long id)
         {
-            var armazem = _repository.Get(p => p.Id == id);
+            var armazem = _uof.ArmazemRepository.Get(p => p.Id == id);
             return Ok(armazem);
         }
 
         [HttpGet]
         public ActionResult<IEnumerable<Armazem>> GetAll()
         {
-            return Ok(_repository.GetAll());
+            return Ok(_uof.ArmazemRepository.GetAll());
         }
 
         [HttpPost]
@@ -37,7 +37,8 @@ namespace ApiProdutos.Controllers
 
             if (armazem is null) return BadRequest("Dados inválidos");
 
-            _repository.Create(armazem);
+            _uof.ArmazemRepository.Create(armazem);
+            _uof.Commit();
             return Ok(armazem);
         }
 
@@ -48,15 +49,17 @@ namespace ApiProdutos.Controllers
 
             if (armazem is null) return BadRequest("Dados inválidos");
 
-            _repository.Update(armazem);
+            _uof.ArmazemRepository.Update(armazem);
+            _uof.Commit();
             return Ok(armazem);
         }
 
         [HttpDelete("{id}")]
         public ActionResult<Armazem> Delete([FromRoute] long id)
         {
-            var armazem = _repository.Get(p => p.Id == id);
-            _repository.Delete(p => p.Id == id);
+            var armazem = _uof.ArmazemRepository.Get(p => p.Id == id);
+            _uof.ArmazemRepository.Delete(p => p.Id == id);
+            _uof.Commit();
             return Ok(armazem);
         }
 

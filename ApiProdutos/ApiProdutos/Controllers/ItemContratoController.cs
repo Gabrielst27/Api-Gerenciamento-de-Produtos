@@ -9,24 +9,24 @@ namespace ApiProdutos.Controllers
     [ApiController]
     public class ItemContratoController : ControllerBase
     {
-        private readonly IRepository<ItemContrato> _repository;
+        private readonly IUnitOfWork _uof;
 
-        public ItemContratoController(IRepository<ItemContrato> repository)
+        public ItemContratoController(IUnitOfWork uof)
         {
-            _repository = repository;
+            _uof = uof;
         }
 
         [HttpGet("{id}")]
         public ActionResult<ItemContrato> Get([FromRoute] long id)
         {
-            var itemContrato = _repository.Get(p => p.Id == id);
+            var itemContrato = _uof.ItemContratoRepository.Get(p => p.Id == id);
             return Ok(itemContrato);
         }
 
         [HttpGet]
         public ActionResult<IEnumerable<ItemContrato>> GetAll()
         {
-            return Ok(_repository.GetAll());
+            return Ok(_uof.ItemContratoRepository.GetAll());
         }
 
         [HttpPost]
@@ -34,7 +34,8 @@ namespace ApiProdutos.Controllers
         {
             if (itemContrato is null) return BadRequest("Dados inválidos");
 
-            _repository.Create(itemContrato);
+            _uof.ItemContratoRepository.Create(itemContrato);
+            _uof.Commit();
             return Ok(itemContrato);
         }
 
@@ -43,15 +44,17 @@ namespace ApiProdutos.Controllers
         {
             if (itemContrato is null) return BadRequest("Dados inválidos");
 
-            _repository.Update(itemContrato);
+            _uof.ItemContratoRepository.Update(itemContrato);
+            _uof.Commit();
             return Ok(itemContrato);
         }
 
         [HttpDelete("{id}")]
         public ActionResult<ItemContrato> Delete([FromRoute] long id)
         {
-            var itemContrato = _repository.Get(p => p.Id == id);
-            _repository.Delete(p => p.Id == id);
+            var itemContrato = _uof.ItemContratoRepository.Get(p => p.Id == id);
+            _uof.ItemContratoRepository.Delete(p => p.Id == id);
+            _uof.Commit();
             return Ok(itemContrato);
         }
 

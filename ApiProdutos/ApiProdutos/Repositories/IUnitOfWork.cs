@@ -9,7 +9,7 @@ namespace ApiProdutos.Repositories
         IRepository<Contrato> ContratoRepository { get; }
         IRepository<Fornecedor> FornecedorRepository { get; }
         IRepository<ItemArmazem> ItemArmazemRepository { get; }
-        IRepository<ItemContrato> itemContratoRepository { get; }
+        IRepository<ItemContrato> ItemContratoRepository { get; }
         IRepository<Produto> ProdutoRepository { get; }
         IRepository<Subcategoria> SubcategoriaRepository { get; }
         void Commit();

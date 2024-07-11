@@ -10,24 +10,24 @@ namespace ApiProdutos.Controllers
     [ApiController]
     public class ContratoController : ControllerBase
     {
-        private readonly IRepository<Contrato> _repository;
+        private readonly IUnitOfWork _uof;
 
-        public ContratoController(IRepository<Contrato> repository)
+        public ContratoController(IUnitOfWork uof)
         {
-            _repository = repository;
+            _uof = uof;
         }
 
         [HttpGet("{id}")]
         public ActionResult<Contrato> Get([FromRoute] long id)
         {
-            var contrato = _repository.Get(p => p.Id == id);
+            var contrato = _uof.ContratoRepository.Get(p => p.Id == id);
             return Ok(contrato);
         }
 
         [HttpGet]
         public ActionResult<IEnumerable<Contrato>> GetAll()
         {
-            return Ok(_repository.GetAll());
+            return Ok(_uof.ContratoRepository.GetAll());
         }
 
         [HttpPost]
@@ -37,7 +37,8 @@ namespace ApiProdutos.Controllers
 
             if (contrato is null) return BadRequest("Dados inválidos");
 
-            _repository.Create(contrato);
+            _uof.ContratoRepository.Create(contrato);
+            _uof.Commit();
             return Ok(contrato);
         }
 
@@ -48,15 +49,17 @@ namespace ApiProdutos.Controllers
 
             if (contrato is null) return BadRequest("Dados inválidos");
 
-            _repository.Update(contrato);
+            _uof.ContratoRepository.Update(contrato);
+            _uof.Commit();
             return Ok(contrato);
         }
 
         [HttpDelete("{id}")]
         public ActionResult<Contrato> Delete([FromRoute] long id)
         {
-            var contrato = _repository.Get(p => p.Id == id);
-            _repository.Delete(p => p.Id == id);
+            var contrato = _uof.ContratoRepository.Get(p => p.Id == id);
+            _uof.ContratoRepository.Delete(p => p.Id == id);
+            _uof.Commit();
             return Ok(contrato);
         }
 
