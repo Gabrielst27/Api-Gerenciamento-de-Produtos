@@ -1,5 +1,7 @@
+using ApiProdutos.Business;
 using ApiProdutos.Context;
 using ApiProdutos.Repositories;
+using ApiProdutos.Validations;
 using EvolveDb;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -18,9 +20,8 @@ string connection = builder.Configuration.GetConnectionString("DefaultConnection
 builder.Services.AddDbContext<PostgreSqlDbContext>(options =>
                     options.UseNpgsql(connection));
 
-
-
-
+builder.Services.AddScoped<IDigitacaoValidation, DigitacaoValidation>();
+builder.Services.AddScoped<ProdutoBusiness>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 

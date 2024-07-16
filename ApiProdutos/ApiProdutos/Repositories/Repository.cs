@@ -41,8 +41,9 @@ namespace ApiProdutos.Repositories
         public T? Delete(Expression<Func<T, bool>> predicate)
         {
             var entity = _context.Set<T>().AsNoTracking().FirstOrDefault(predicate);
-            _context.Remove(entity);
 
+            _context.Remove(entity);
+            
             return entity;
         }
     }

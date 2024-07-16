@@ -33,7 +33,6 @@ namespace ApiProdutos.Controllers
         [HttpPost]
         public ActionResult<Armazem> Post([FromBody] Armazem armazem)
         {
-            armazem.Nome = PrimeiraMaiuscula.Corrigir(armazem.Nome);
 
             if (armazem is null) return BadRequest("Dados inválidos");
 
@@ -45,7 +44,6 @@ namespace ApiProdutos.Controllers
         [HttpPut]
         public ActionResult<Armazem> Put([FromBody] Armazem armazem)
         {
-            armazem.Nome = PrimeiraMaiuscula.Corrigir(armazem.Nome);
 
             if (armazem is null) return BadRequest("Dados inválidos");
 

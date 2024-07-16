@@ -33,7 +33,6 @@ namespace ApiProdutos.Controllers
         [HttpPost]
         public ActionResult<Categoria> Post([FromBody] Categoria categoria)
         {
-            categoria.Nome = PrimeiraMaiuscula.Corrigir(categoria.Nome);
 
             if (categoria is null) return BadRequest("Dados inválidos");
 
@@ -45,7 +44,6 @@ namespace ApiProdutos.Controllers
         [HttpPut]
         public ActionResult<Categoria> Put([FromBody] Categoria categoria)
         {
-            categoria.Nome = PrimeiraMaiuscula.Corrigir(categoria.Nome);
 
             if (categoria is null) return BadRequest("Dados inválidos");
 

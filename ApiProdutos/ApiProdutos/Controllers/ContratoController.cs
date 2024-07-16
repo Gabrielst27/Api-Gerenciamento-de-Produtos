@@ -33,7 +33,6 @@ namespace ApiProdutos.Controllers
         [HttpPost]
         public ActionResult<Contrato> Post([FromBody] Contrato contrato)
         {
-            contrato.Representante = PrimeiraMaiuscula.Corrigir(contrato.Representante);
 
             if (contrato is null) return BadRequest("Dados inválidos");
 
@@ -45,7 +44,6 @@ namespace ApiProdutos.Controllers
         [HttpPut]
         public ActionResult<Contrato> Put([FromBody] Contrato contrato)
         {
-            contrato.Representante = PrimeiraMaiuscula.Corrigir(contrato.Representante);
 
             if (contrato is null) return BadRequest("Dados inválidos");
 
