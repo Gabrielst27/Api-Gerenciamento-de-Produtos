@@ -1,4 +1,5 @@
-﻿using ApiProdutos.Models;
+﻿using ApiProdutos.Business;
+using ApiProdutos.Models;
 using ApiProdutos.Repositories;
 using ApiProdutos.Validations;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -11,55 +12,47 @@ namespace ApiProdutos.Controllers
     [ApiController]
     public class FornecedorController : ControllerBase
     {
-        private readonly IUnitOfWork _uof;
+        private readonly FornecedorBusiness _business;
 
-        public FornecedorController(IUnitOfWork uof)
+        public FornecedorController(FornecedorBusiness business)
         {
-            _uof = uof;
+            _business = business;
         }
 
         [HttpGet("{id}")]
         public ActionResult<Fornecedor> Get([FromRoute] long id)
         {
-            var fornecedor = _uof.FornecedorRepository.Get(p => p.Id == id);
-            return Ok(fornecedor);
+            return Ok(_business.Get(id));
         }
 
         [HttpGet]
         public ActionResult<IEnumerable<Fornecedor>> GetAll()
         {
-            return Ok(_uof.FornecedorRepository.GetAll());
+            return Ok(_business.GetAll());
         }
 
         [HttpPost]
         public ActionResult<Fornecedor> Post([FromBody] Fornecedor fornecedor)
         {
-
             if (fornecedor is null) return BadRequest("Dados inválidos");
 
-            _uof.FornecedorRepository.Create(fornecedor);
-            _uof.Commit();
-            return Ok(fornecedor);
+            return Ok(_business.Create(fornecedor));
         }
 
         [HttpPut]
         public ActionResult<Fornecedor> Put([FromBody] Fornecedor fornecedor)
         {
-
             if (fornecedor is null) return BadRequest("Dados inválidos");
 
-            _uof.FornecedorRepository.Update(fornecedor);
-            _uof.Commit();
-            return Ok(fornecedor);
+            return Ok(_business.Update(fornecedor));
         }
 
         [HttpDelete("{id}")]
         public ActionResult<Fornecedor> Delete([FromRoute] long id)
         {
-            var fornecedor = _uof.FornecedorRepository.Get(p => p.Id == id);
-            _uof.FornecedorRepository.Delete(p => p.Id == id);
-            _uof.Commit();
-            return Ok(fornecedor);
+            if (_business.Get(id) is null) return BadRequest("Fornecedor não encontrado");
+            
+            return Ok(_business.Delete(id));
         }
 
     }

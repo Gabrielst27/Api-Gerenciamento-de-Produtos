@@ -29,6 +29,8 @@ namespace ApiProdutos.Business
         {
             produto.Nome = _digval.PrimeiraMaiuscula(produto.Nome);
             produto.Descricao = _digval.PrimeiraMaiuscula(produto.Descricao);
+            produto.CorPrincipal = _digval.PrimeiraMaiuscula(produto.CorPrincipal);
+            produto.CorSecundaria = _digval.PrimeiraMaiuscula(produto.CorSecundaria);
 
             _uof.ProdutoRepository.Create(produto);
             _uof.Commit();
@@ -40,6 +42,8 @@ namespace ApiProdutos.Business
         {
             produto.Nome = _digval.PrimeiraMaiuscula(produto.Nome);
             produto.Descricao = _digval.PrimeiraMaiuscula(produto.Descricao);
+            produto.CorPrincipal = _digval.PrimeiraMaiuscula(produto.CorPrincipal);
+            produto.CorSecundaria = _digval.PrimeiraMaiuscula(produto.CorSecundaria);
 
             _uof.ProdutoRepository.Update(produto);
             _uof.Commit();
@@ -49,12 +53,10 @@ namespace ApiProdutos.Business
 
         public Produto Delete(long id)
         {
-            var prod = _uof.ProdutoRepository.Get(p => p.Id == id);
-
             _uof.ProdutoRepository.Delete(p => p.Id == id);
             _uof.Commit();
 
-            return prod;
+            return _uof.ProdutoRepository.Get(p => p.Id == id);
         }
     }
 }

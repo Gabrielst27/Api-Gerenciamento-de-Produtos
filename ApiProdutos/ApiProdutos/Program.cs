@@ -21,7 +21,14 @@ builder.Services.AddDbContext<PostgreSqlDbContext>(options =>
                     options.UseNpgsql(connection));
 
 builder.Services.AddScoped<IDigitacaoValidation, DigitacaoValidation>();
+builder.Services.AddScoped<ArmazemBusiness>();
+builder.Services.AddScoped<CategoriaBusiness>();
+builder.Services.AddScoped<ContratoBusiness>();
+builder.Services.AddScoped<FornecedorBusiness>();
+builder.Services.AddScoped<ItemArmazemBusiness>();
+builder.Services.AddScoped<ItemContratoBusiness>();
 builder.Services.AddScoped<ProdutoBusiness>();
+builder.Services.AddScoped<SubcategoriaBusiness>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 

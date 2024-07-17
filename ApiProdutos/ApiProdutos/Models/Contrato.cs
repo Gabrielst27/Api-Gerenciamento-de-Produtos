@@ -27,7 +27,7 @@ namespace ApiProdutos.Models
         public decimal ValorMensal { get; set; }
 
         [Column("contr_reajuste")]
-        public decimal Reajuste { get; set; }
+        public float Reajuste { get; set; }
 
         [Required]
         [StringLength(20, ErrorMessage = "O tipo do contrato deve ter entre 4 e 20 caracteres", MinimumLength = 4)]

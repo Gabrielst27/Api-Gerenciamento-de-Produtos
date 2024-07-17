@@ -1,4 +1,5 @@
-﻿using ApiProdutos.Models;
+﻿using ApiProdutos.Business;
+using ApiProdutos.Models;
 using ApiProdutos.Repositories;
 using ApiProdutos.Validations;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -10,55 +11,47 @@ namespace ApiProdutos.Controllers
     [ApiController]
     public class ArmazemController : ControllerBase
     {
-        private readonly IUnitOfWork _uof;
+        private readonly ArmazemBusiness _business;
 
-        public ArmazemController(IUnitOfWork unitOfWork)
+        public ArmazemController(ArmazemBusiness business)
         {
-            _uof = unitOfWork;
+            _business = business;
         }
 
         [HttpGet("{id}")]
         public ActionResult<Armazem> Get([FromRoute] long id)
         {
-            var armazem = _uof.ArmazemRepository.Get(p => p.Id == id);
-            return Ok(armazem);
+            return Ok(_business.Get(id));
         }
 
         [HttpGet]
         public ActionResult<IEnumerable<Armazem>> GetAll()
         {
-            return Ok(_uof.ArmazemRepository.GetAll());
+            return Ok(_business.GetAll());
         }
 
         [HttpPost]
         public ActionResult<Armazem> Post([FromBody] Armazem armazem)
         {
-
             if (armazem is null) return BadRequest("Dados inválidos");
 
-            _uof.ArmazemRepository.Create(armazem);
-            _uof.Commit();
-            return Ok(armazem);
+            return Ok(_business.Create(armazem));
         }
 
         [HttpPut]
         public ActionResult<Armazem> Put([FromBody] Armazem armazem)
         {
-
             if (armazem is null) return BadRequest("Dados inválidos");
 
-            _uof.ArmazemRepository.Update(armazem);
-            _uof.Commit();
-            return Ok(armazem);
+            return Ok(_business.Update(armazem));
         }
 
         [HttpDelete("{id}")]
         public ActionResult<Armazem> Delete([FromRoute] long id)
         {
-            var armazem = _uof.ArmazemRepository.Get(p => p.Id == id);
-            _uof.ArmazemRepository.Delete(p => p.Id == id);
-            _uof.Commit();
-            return Ok(armazem);
+            if (_business.Get(id) is null) return BadRequest("Armazem não encontrado");
+
+            return Ok(_business.Delete(id));
         }
 
     }

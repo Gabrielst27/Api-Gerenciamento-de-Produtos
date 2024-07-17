@@ -1,4 +1,5 @@
-﻿using ApiProdutos.Models;
+﻿using ApiProdutos.Business;
+using ApiProdutos.Models;
 using ApiProdutos.Repositories;
 using ApiProdutos.Validations;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -10,55 +11,47 @@ namespace ApiProdutos.Controllers
     [ApiController]
     public class CategoriaController : ControllerBase
     {
-        private readonly IUnitOfWork _uof;
+        private readonly CategoriaBusiness _business;
 
-        public CategoriaController(IUnitOfWork uof)
+        public CategoriaController(CategoriaBusiness business)
         {
-            _uof = uof;
+            _business = business;
         }
 
         [HttpGet("{id}")]
         public ActionResult<Categoria> Get([FromRoute] long id)
         {
-            var categoria = _uof.CategoriaRepository.Get(p => p.Id == id);
-            return Ok(categoria);
+            return Ok(_business.Get(id));
         }
 
         [HttpGet]
         public ActionResult<IEnumerable<Categoria>> GetAll()
         {
-            return Ok(_uof.CategoriaRepository.GetAll());
+            return Ok(_business.GetAll());
         }
 
         [HttpPost]
         public ActionResult<Categoria> Post([FromBody] Categoria categoria)
         {
-
             if (categoria is null) return BadRequest("Dados inválidos");
 
-            _uof.CategoriaRepository.Create(categoria);
-            _uof.Commit();
-            return Ok(categoria);
+            return Ok(_business.Create(categoria));
         }
 
         [HttpPut]
         public ActionResult<Categoria> Put([FromBody] Categoria categoria)
         {
-
             if (categoria is null) return BadRequest("Dados inválidos");
 
-            _uof.CategoriaRepository.Update(categoria);
-            _uof.Commit();
-            return Ok(categoria);
+            return Ok(_business.Update(categoria));
         }
 
         [HttpDelete("{id}")]
         public ActionResult<Categoria> Delete([FromRoute] long id)
         {
-            var categoria = _uof.CategoriaRepository.Get(p => p.Id == id);
-            _uof.CategoriaRepository.Delete(p => p.Id == id);
-            _uof.Commit();
-            return Ok(categoria);
+            if (_business.Get(id) is null) return BadRequest("Categoria não encontrada");
+
+            return Ok(_business.Delete(id));
         }
 
     }

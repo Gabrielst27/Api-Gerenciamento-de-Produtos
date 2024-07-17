@@ -1,7 +1,6 @@
 ﻿using ApiProdutos.Models;
 using ApiProdutos.Repositories;
-using ApiProdutos.Validations;
-using Microsoft.AspNetCore.Http.HttpResults;
+using ApiProdutos.Business;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApiProdutos.Controllers
@@ -10,55 +9,47 @@ namespace ApiProdutos.Controllers
     [ApiController]
     public class SubcategoriaController : ControllerBase
     {
-        private readonly IUnitOfWork _uof;
+        private readonly SubcategoriaBusiness _business;
 
-        public SubcategoriaController(IUnitOfWork uof)
+        public SubcategoriaController(SubcategoriaBusiness business)
         {
-            _uof = uof;
+            _business = business;
         }
 
         [HttpGet("{id}")]
         public ActionResult<Subcategoria> Get([FromRoute] long id)
         {
-            var subcategoria = _uof.SubcategoriaRepository.Get(p => p.Id == id);
-            return Ok(subcategoria);
+            return Ok(_business.Get(id));
         }
 
         [HttpGet]
         public ActionResult<IEnumerable<Subcategoria>> GetAll()
         {
-            return Ok(_uof.SubcategoriaRepository.GetAll());
+            return Ok(_business.GetAll());
         }
 
         [HttpPost]
         public ActionResult<Subcategoria> Post([FromBody] Subcategoria subcategoria)
         {
-
             if (subcategoria is null) return BadRequest("Dados inválidos");
 
-            _uof.SubcategoriaRepository.Create(subcategoria);
-            _uof.Commit();
-            return Ok(subcategoria);
+            return Ok(_business.Create(subcategoria));
         }
 
         [HttpPut]
         public ActionResult<Subcategoria> Put([FromBody] Subcategoria subcategoria)
         {
-
             if (subcategoria is null) return BadRequest("Dados inválidos");
 
-            _uof.SubcategoriaRepository.Update(subcategoria);
-            _uof.Commit();
-            return Ok(subcategoria);
+            return Ok(_business.Update(subcategoria));
         }
 
         [HttpDelete("{id}")]
         public ActionResult<Subcategoria> Delete([FromRoute] long id)
         {
-            var subcategoria = _uof.SubcategoriaRepository.Get(p => p.Id == id);
-            _uof.SubcategoriaRepository.Delete(p => p.Id == id);
-            _uof.Commit();
-            return Ok(subcategoria);
+            if (_business.Get(id) is null) return BadRequest("Subcategoria não encontrada");
+            
+            return Ok(_business.Delete(id));
         }
 
     }

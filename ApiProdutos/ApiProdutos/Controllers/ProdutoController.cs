@@ -23,7 +23,7 @@ namespace ApiProdutos.Controllers
         {
             return Ok(_business.Get(id));
         }
-        /*
+        
         [HttpGet]
         public ActionResult<IEnumerable<Produto>> GetAll()
         {
@@ -35,31 +35,23 @@ namespace ApiProdutos.Controllers
         {
             if (produto is null) return BadRequest("Dados inválidos");
 
-            var prod = _business.Create(produto);
-
-            return Ok(prod);
+            return Ok(_business.Create(produto));
         }
 
         [HttpPut]
         public ActionResult<Produto> Put([FromBody] Produto produto)
         {
             if (produto is null) return BadRequest("Dados inválidos");
-            
-            var prod = _business.Update(produto);
 
-            return Ok(prod);
+            return Ok(_business.Update(produto));
         }
 
         [HttpDelete("{id}")]
         public ActionResult<Produto> Delete([FromRoute] long id)
         {
-            var produto = _business.Get(id);
-            if (produto is null) return BadRequest("Produto não encontrado");
-
-            var prod = _business.Delete(id);
+            if (_business.Get(id) is null) return BadRequest("Produto não encontrado");
             
-            return Ok(prod);
+            return Ok(_business.Delete(id));
         }
-        */
     }
 }

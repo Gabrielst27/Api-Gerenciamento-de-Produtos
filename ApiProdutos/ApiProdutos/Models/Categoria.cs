@@ -18,13 +18,13 @@ namespace ApiProdutos.Models
         public string Nome { get; set; }
 
         [Column("categ_reajuste1")]
-        public decimal Reajuste1 { get; set; }
+        public float Reajuste1 { get; set; }
 
         [Column("categ_reajuste2")]
-        public decimal Reajuste2 { get; set; }
+        public float Reajuste2 { get; set; }
 
         [Column("categ_reajuste3")]
-        public decimal Reajuste3 { get; set; }
+        public float Reajuste3 { get; set; }
 
         [Column("categ_data_cadastro")]
         public DateTime DataCadastro { get; set; }

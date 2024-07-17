@@ -1,4 +1,5 @@
-﻿using ApiProdutos.Models;
+﻿using ApiProdutos.Business;
+using ApiProdutos.Models;
 using ApiProdutos.Repositories;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -9,24 +10,23 @@ namespace ApiProdutos.Controllers
     [ApiController]
     public class ItemContratoController : ControllerBase
     {
-        private readonly IUnitOfWork _uof;
+        private readonly ItemContratoBusiness _business;
 
-        public ItemContratoController(IUnitOfWork uof)
+        public ItemContratoController(ItemContratoBusiness business)
         {
-            _uof = uof;
+            _business = business;
         }
 
         [HttpGet("{id}")]
         public ActionResult<ItemContrato> Get([FromRoute] long id)
         {
-            var itemContrato = _uof.ItemContratoRepository.Get(p => p.Id == id);
-            return Ok(itemContrato);
+           return Ok(_business.Get(id));
         }
 
         [HttpGet]
         public ActionResult<IEnumerable<ItemContrato>> GetAll()
         {
-            return Ok(_uof.ItemContratoRepository.GetAll());
+            return Ok(_business.GetAll());
         }
 
         [HttpPost]
@@ -34,9 +34,7 @@ namespace ApiProdutos.Controllers
         {
             if (itemContrato is null) return BadRequest("Dados inválidos");
 
-            _uof.ItemContratoRepository.Create(itemContrato);
-            _uof.Commit();
-            return Ok(itemContrato);
+            return Ok(_business.Create(itemContrato));
         }
 
         [HttpPut]
@@ -44,18 +42,15 @@ namespace ApiProdutos.Controllers
         {
             if (itemContrato is null) return BadRequest("Dados inválidos");
 
-            _uof.ItemContratoRepository.Update(itemContrato);
-            _uof.Commit();
-            return Ok(itemContrato);
+            return Ok(_business.Update(itemContrato));
         }
 
         [HttpDelete("{id}")]
         public ActionResult<ItemContrato> Delete([FromRoute] long id)
         {
-            var itemContrato = _uof.ItemContratoRepository.Get(p => p.Id == id);
-            _uof.ItemContratoRepository.Delete(p => p.Id == id);
-            _uof.Commit();
-            return Ok(itemContrato);
+            if (_business.Get(id) is null) return BadRequest("Item do contrato não encontrado");
+
+            return Ok(_business.Delete(id));
         }
 
     }
