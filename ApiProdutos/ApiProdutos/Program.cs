@@ -20,7 +20,7 @@ string connection = builder.Configuration.GetConnectionString("DefaultConnection
 builder.Services.AddDbContext<PostgreSqlDbContext>(options =>
                     options.UseNpgsql(connection));
 
-builder.Services.AddScoped<IDigitacaoValidation, DigitacaoValidation>();
+builder.Services.AddScoped(typeof(IDigitacaoValidation<>), typeof(DigitacaoValidation<>));
 builder.Services.AddScoped<ArmazemBusiness>();
 builder.Services.AddScoped<CategoriaBusiness>();
 builder.Services.AddScoped<ContratoBusiness>();

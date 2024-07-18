@@ -7,9 +7,9 @@ namespace ApiProdutos.Business
     public class ProdutoBusiness
     {
         private readonly IUnitOfWork _uof;
-        private readonly IDigitacaoValidation _digval;
+        private readonly IDigitacaoValidation<Produto> _digval;
 
-        public ProdutoBusiness(IUnitOfWork uof, IDigitacaoValidation digval)
+        public ProdutoBusiness(IUnitOfWork uof, IDigitacaoValidation<Produto> digval)
         {
             _uof = uof;
             _digval = digval;
@@ -27,15 +27,16 @@ namespace ApiProdutos.Business
 
         public Produto Create(Produto produto)
         {
-            produto.Nome = _digval.PrimeiraMaiuscula(produto.Nome);
-            produto.Descricao = _digval.PrimeiraMaiuscula(produto.Descricao);
-            produto.CorPrincipal = _digval.PrimeiraMaiuscula(produto.CorPrincipal);
-            produto.CorSecundaria = _digval.PrimeiraMaiuscula(produto.CorSecundaria);
+            Produto prd = _digval.RemoverEspaco(produto);
+            prd.Nome = _digval.PrimeiraMaiuscula(prd.Nome);
+            prd.Descricao = _digval.PrimeiraMaiuscula(prd.Descricao);
+            prd.CorPrincipal = _digval.PrimeiraMaiuscula(prd.CorPrincipal);
+            prd.CorSecundaria = _digval.PrimeiraMaiuscula(prd.CorSecundaria);
 
-            _uof.ProdutoRepository.Create(produto);
+            _uof.ProdutoRepository.Create(prd);
             _uof.Commit();
 
-            return produto;
+            return prd;
         }
 
         public Produto Update(Produto produto)

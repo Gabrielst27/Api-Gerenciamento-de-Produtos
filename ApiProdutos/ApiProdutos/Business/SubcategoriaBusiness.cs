@@ -7,9 +7,9 @@ namespace ApiProdutos.Business
     public class SubcategoriaBusiness
     {
         private readonly IUnitOfWork _uof;
-        private readonly IDigitacaoValidation _digval;
+        private readonly IDigitacaoValidation<Subcategoria> _digval;
 
-        public SubcategoriaBusiness(IUnitOfWork uof, IDigitacaoValidation digval)
+        public SubcategoriaBusiness(IUnitOfWork uof, IDigitacaoValidation<Subcategoria> digval)
         {
             _uof = uof;
             _digval = digval;
@@ -27,12 +27,13 @@ namespace ApiProdutos.Business
 
         public Subcategoria Create(Subcategoria subcategoria)
         {
-            subcategoria.Nome = _digval.PrimeiraMaiuscula(subcategoria.Nome);
+            Subcategoria sbc = _digval.RemoverEspaco(subcategoria);
+            sbc.Nome = _digval.PrimeiraMaiuscula(sbc.Nome);
 
-            _uof.SubcategoriaRepository.Create(subcategoria);
+            _uof.SubcategoriaRepository.Create(sbc);
             _uof.Commit();
 
-            return subcategoria;
+            return sbc;
         }
 
         public Subcategoria Update(Subcategoria subcategoria)

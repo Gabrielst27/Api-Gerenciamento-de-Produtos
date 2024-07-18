@@ -7,9 +7,9 @@ namespace ApiProdutos.Business
     public class ArmazemBusiness
     {
         private readonly IUnitOfWork _uof;
-        private readonly IDigitacaoValidation _digval;
+        private readonly IDigitacaoValidation<Armazem> _digval;
 
-        public ArmazemBusiness(IUnitOfWork uof, IDigitacaoValidation digval)
+        public ArmazemBusiness(IUnitOfWork uof, IDigitacaoValidation<Armazem> digval)
         {
             _uof = uof;
             _digval = digval;
@@ -27,12 +27,13 @@ namespace ApiProdutos.Business
 
         public Armazem Create(Armazem armazem)
         {
-            armazem.Nome = _digval.PrimeiraMaiuscula(armazem.Nome);
+            Armazem amz = _digval.RemoverEspaco(armazem);
+            amz.Nome = _digval.PrimeiraMaiuscula(amz.Nome);
 
-            _uof.ArmazemRepository.Create(armazem);
+            _uof.ArmazemRepository.Create(amz);
             _uof.Commit();
 
-            return armazem;
+            return amz;
         }
 
         public Armazem Update(Armazem armazem)

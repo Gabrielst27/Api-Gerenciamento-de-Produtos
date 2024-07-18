@@ -1,7 +1,8 @@
 ﻿namespace ApiProdutos.Validations
 {
-    public interface IDigitacaoValidation
+    public interface IDigitacaoValidation<T>
     {
-        public string PrimeiraMaiuscula(string str);
+        string PrimeiraMaiuscula(string str);
+        T? RemoverEspaco(T entity);
     }
 }

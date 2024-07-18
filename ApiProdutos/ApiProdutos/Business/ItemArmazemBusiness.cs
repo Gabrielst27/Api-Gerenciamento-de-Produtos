@@ -7,9 +7,9 @@ namespace ApiProdutos.Business
     public class ItemArmazemBusiness
     {
         private readonly IUnitOfWork _uof;
-        private readonly IDigitacaoValidation _digval;
+        private readonly IDigitacaoValidation<ItemArmazem> _digval;
 
-        public ItemArmazemBusiness(IUnitOfWork uof, IDigitacaoValidation digval)
+        public ItemArmazemBusiness(IUnitOfWork uof, IDigitacaoValidation<ItemArmazem> digval)
         {
             _uof = uof;
             _digval = digval;

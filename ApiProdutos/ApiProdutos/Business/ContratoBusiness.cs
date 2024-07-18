@@ -7,9 +7,9 @@ namespace ApiProdutos.Business
     public class ContratoBusiness
     {
         private readonly IUnitOfWork _uof;
-        private readonly IDigitacaoValidation _digval;
+        private readonly IDigitacaoValidation<Contrato> _digval;
 
-        public ContratoBusiness(IUnitOfWork uof, IDigitacaoValidation digval)
+        public ContratoBusiness(IUnitOfWork uof, IDigitacaoValidation<Contrato> digval)
         {
             _uof = uof;
             _digval = digval;
@@ -27,12 +27,13 @@ namespace ApiProdutos.Business
 
         public Contrato Create(Contrato contrato)
         {
-            contrato.Representante = _digval.PrimeiraMaiuscula(contrato.Representante);
+            Contrato ctr = _digval.RemoverEspaco(contrato);
+            ctr.Representante = _digval.PrimeiraMaiuscula(ctr.Representante);
 
-            _uof.ContratoRepository.Create(contrato);
+            _uof.ContratoRepository.Create(ctr);
             _uof.Commit();
 
-            return contrato;
+            return ctr;
         }
 
         public Contrato Update(Contrato contrato)

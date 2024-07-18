@@ -7,9 +7,9 @@ namespace ApiProdutos.Business
     public class CategoriaBusiness
     {
         private readonly IUnitOfWork _uof;
-        private readonly IDigitacaoValidation _digval;
+        private readonly IDigitacaoValidation<Categoria> _digval;
 
-        public CategoriaBusiness(IUnitOfWork uof, IDigitacaoValidation digval)
+        public CategoriaBusiness(IUnitOfWork uof, IDigitacaoValidation<Categoria> digval)
         {
             _uof = uof;
             _digval = digval;
@@ -27,12 +27,13 @@ namespace ApiProdutos.Business
 
         public Categoria Create(Categoria categoria)
         {
-            categoria.Nome = _digval.PrimeiraMaiuscula(categoria.Nome);
+            Categoria cat = _digval.RemoverEspaco(categoria);
+            cat.Nome = _digval.PrimeiraMaiuscula(categoria.Nome);
 
-            _uof.CategoriaRepository.Create(categoria);
+            _uof.CategoriaRepository.Create(cat);
             _uof.Commit();
 
-            return categoria;
+            return cat;
         }
 
         public Categoria Update(Categoria categoria)

@@ -1,6 +1,8 @@
-﻿namespace ApiProdutos.Validations
+﻿using System.Text.RegularExpressions;
+
+namespace ApiProdutos.Validations
 {
-    public class DigitacaoValidation : IDigitacaoValidation
+    public class DigitacaoValidation<T> : IDigitacaoValidation<T> where T : class
     {
         public string PrimeiraMaiuscula(string str)
         {
@@ -17,6 +19,27 @@
             }
 
             return str;
+        }
+
+        public T? RemoverEspaco(T entity)
+        {
+            var atributos = typeof(T).GetProperties();
+
+            foreach(var atributo in atributos)
+            {
+                if (atributo.PropertyType == typeof(string))
+                { 
+                    var valor = (string?)atributo.GetValue(entity);
+                    
+                    if (!string.IsNullOrEmpty(valor))
+                    {
+                        valor = valor.TrimStart();
+                        atributo.SetValue(entity, valor);
+                    }
+                }
+            }
+
+            return entity;
         }
     }
 }
