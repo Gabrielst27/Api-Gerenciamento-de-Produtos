@@ -1,4 +1,5 @@
 ﻿using ApiProdutos.Business;
+using ApiProdutos.DTOs;
 using ApiProdutos.Models;
 using ApiProdutos.Repositories;
 using ApiProdutos.Validations;
@@ -19,19 +20,19 @@ namespace ApiProdutos.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Categoria> Get([FromRoute] long id)
+        public ActionResult<CategoriaDTO> Get([FromRoute] long id)
         {
             return Ok(_business.Get(id));
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Categoria>> GetAll()
+        public ActionResult<IEnumerable<CategoriaDTO>> GetAll()
         {
             return Ok(_business.GetAll());
         }
 
         [HttpPost]
-        public ActionResult<Categoria> Post([FromBody] Categoria categoria)
+        public ActionResult<CategoriaDTO> Post([FromBody] CategoriaDTO categoria)
         {
             if (categoria is null) return BadRequest("Dados inválidos");
 
@@ -39,7 +40,7 @@ namespace ApiProdutos.Controllers
         }
 
         [HttpPut]
-        public ActionResult<Categoria> Put([FromBody] Categoria categoria)
+        public ActionResult<CategoriaDTO> Put([FromBody] CategoriaDTO categoria)
         {
             if (categoria is null) return BadRequest("Dados inválidos");
 
@@ -47,7 +48,7 @@ namespace ApiProdutos.Controllers
         }
 
         [HttpDelete("{id}")]
-        public ActionResult<Categoria> Delete([FromRoute] long id)
+        public ActionResult<CategoriaDTO> Delete([FromRoute] long id)
         {
             if (_business.Get(id) is null) return BadRequest("Categoria não encontrada");
 
