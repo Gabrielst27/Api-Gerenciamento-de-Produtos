@@ -29,6 +29,8 @@ namespace ApiProdutos.Business
 
         public FornecedorDTO Create(FornecedorDTO fornecedorDto)
         {
+            DateTime time = DateTime.Now;
+
             var fornecedor = fornecedorDto.ToModel();
 
             Fornecedor fnc = _digval.RemoverEspaco(fornecedor);
@@ -40,6 +42,8 @@ namespace ApiProdutos.Business
             fnc.Cidade = _digval.PrimeiraMaiuscula(fnc.Cidade);
             fnc.Uf = fnc.Uf.ToUpper();
             fnc.Pais = _digval.PrimeiraMaiuscula(fnc.Pais);
+
+            fornecedor.DataCadastro = time.ToUniversalTime();
 
             _uof.FornecedorRepository.Create(fnc);
             _uof.Commit();

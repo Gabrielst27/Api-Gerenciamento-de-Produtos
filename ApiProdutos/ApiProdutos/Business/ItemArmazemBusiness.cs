@@ -1,4 +1,6 @@
-﻿using ApiProdutos.Models;
+﻿using ApiProdutos.DTOs;
+using ApiProdutos.Extensions.DTOs;
+using ApiProdutos.Models;
 using ApiProdutos.Repositories;
 using ApiProdutos.Validations;
 
@@ -15,38 +17,41 @@ namespace ApiProdutos.Business
             _digval = digval;
         }
 
-        public ItemArmazem Get(long id)
+        public ItemArmazemDTO Get(long id)
         {
-            return _uof.ItemArmazemRepository.Get(p => p.Id == id);
+            return _uof.ItemArmazemRepository.Get(p => p.Id == id).ToDTO();
         }
 
-        public IEnumerable<ItemArmazem> GetAll()
+        public IEnumerable<ItemArmazemDTO> GetAll()
         {
-            return _uof.ItemArmazemRepository.GetAll();
+            return _uof.ItemArmazemRepository.GetAll().ToListDTO();
         }
 
-        public ItemArmazem Create(ItemArmazem itemArmazem)
+        public ItemArmazemDTO Create(ItemArmazemDTO itemArmazemDto)
         {
+            var itemArmazem = itemArmazemDto.ToModel();
+
             _uof.ItemArmazemRepository.Create(itemArmazem);
             _uof.Commit();
 
-            return itemArmazem;
+            return itemArmazem.ToDTO();
         }
 
-        public ItemArmazem Update(ItemArmazem itemArmazem)
+        public ItemArmazemDTO Update(ItemArmazemDTO itemArmazemDto)
         {
+            var itemArmazem = itemArmazemDto.ToModel();
             _uof.ItemArmazemRepository.Update(itemArmazem);
             _uof.Commit();
 
-            return itemArmazem;
+            return itemArmazem.ToDTO();
         }
 
-        public ItemArmazem Delete(long id)
+        public ItemArmazemDTO Delete(long id)
         {
             _uof.ItemArmazemRepository.Delete(p => p.Id == id);
             _uof.Commit();
 
-            return _uof.ItemArmazemRepository.Get(p => p.Id == id);
+            return _uof.ItemArmazemRepository.Get(p => p.Id == id).ToDTO();
         }
     }
 }

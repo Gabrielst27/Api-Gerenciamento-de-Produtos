@@ -1,4 +1,6 @@
-﻿using ApiProdutos.Models;
+﻿using ApiProdutos.DTOs;
+using ApiProdutos.Extensions.DTOs;
+using ApiProdutos.Models;
 using ApiProdutos.Repositories;
 using ApiProdutos.Validations;
 
@@ -15,38 +17,42 @@ namespace ApiProdutos.Business
             _digval = digval;
         }
 
-        public ItemContrato Get(long id)
+        public ItemContratoDTO Get(long id)
         {
-            return _uof.ItemContratoRepository.Get(p => p.Id == id);
+            return _uof.ItemContratoRepository.Get(p => p.Id == id).ToDTO();
         }
 
-        public IEnumerable<ItemContrato> GetAll()
+        public IEnumerable<ItemContratoDTO> GetAll()
         {
-            return _uof.ItemContratoRepository.GetAll();
+            return _uof.ItemContratoRepository.GetAll().ToListDTO();
         }
 
-        public ItemContrato Create(ItemContrato itemContrato)
+        public ItemContratoDTO Create(ItemContratoDTO itemContratoDto)
         {
+            var itemContrato = itemContratoDto.ToModel();
+
             _uof.ItemContratoRepository.Create(itemContrato);
             _uof.Commit();
 
-            return itemContrato;
+            return itemContrato.ToDTO();
         }
 
-        public ItemContrato Update(ItemContrato itemContrato)
+        public ItemContratoDTO Update(ItemContratoDTO itemContratoDto)
         {
+            var itemContrato = itemContratoDto.ToModel();
+
             _uof.ItemContratoRepository.Update(itemContrato);
             _uof.Commit();
 
-            return itemContrato;
+            return itemContrato.ToDTO();
         }
 
-        public ItemContrato Delete(long id)
+        public ItemContratoDTO Delete(long id)
         {
             _uof.ItemContratoRepository.Delete(p => p.Id == id);
             _uof.Commit();
 
-            return _uof.ItemContratoRepository.Get(p => p.Id == id);
+            return _uof.ItemContratoRepository.Get(p => p.Id == id).ToDTO();
         }
     }
 }

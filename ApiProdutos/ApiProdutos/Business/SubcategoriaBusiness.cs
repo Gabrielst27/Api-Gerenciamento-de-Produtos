@@ -1,4 +1,6 @@
-﻿using ApiProdutos.Models;
+﻿using ApiProdutos.DTOs;
+using ApiProdutos.Extensions.DTOs;
+using ApiProdutos.Models;
 using ApiProdutos.Repositories;
 using ApiProdutos.Validations;
 
@@ -15,43 +17,49 @@ namespace ApiProdutos.Business
             _digval = digval;
         }
 
-        public Subcategoria Get(long id)
+        public SubcategoriaDTO Get(long id)
         {
-            return _uof.SubcategoriaRepository.Get(p => p.Id == id);
+            return _uof.SubcategoriaRepository.Get(p => p.Id == id).ToDTO();
         }
 
-        public IEnumerable<Subcategoria> GetAll()
+        public IEnumerable<SubcategoriaDTO> GetAll()
         {
-            return _uof.SubcategoriaRepository.GetAll();
+            return _uof.SubcategoriaRepository.GetAll().ToListDTO();
         }
 
-        public Subcategoria Create(Subcategoria subcategoria)
+        public SubcategoriaDTO Create(SubcategoriaDTO subcategoriaDto)
         {
+            DateTime time = DateTime.Now;
+
+            var subcategoria = subcategoriaDto.ToModel();
+
             Subcategoria sbc = _digval.RemoverEspaco(subcategoria);
             sbc.Nome = _digval.PrimeiraMaiuscula(sbc.Nome);
 
             _uof.SubcategoriaRepository.Create(sbc);
             _uof.Commit();
 
-            return sbc;
+            return sbc.ToDTO();
         }
 
-        public Subcategoria Update(Subcategoria subcategoria)
+        public SubcategoriaDTO Update(SubcategoriaDTO subcategoriaDto)
         {
+            var subcategoria = subcategoriaDto.ToModel();
+
             subcategoria.Nome = _digval.PrimeiraMaiuscula(subcategoria.Nome);
 
             _uof.SubcategoriaRepository.Update(subcategoria);
             _uof.Commit();
 
-            return subcategoria;
+            return subcategoria.ToDTO();
         }
 
-        public Subcategoria Delete(long id)
+        public SubcategoriaDTO Delete(long id)
         {
             _uof.SubcategoriaRepository.Delete(p => p.Id == id);
             _uof.Commit();
 
-            return _uof.SubcategoriaRepository.Get(p => p.Id == id);
+            return _uof.SubcategoriaRepository.Get(p => p.Id == id).ToDTO();
         }
     }
 }

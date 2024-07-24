@@ -2,6 +2,7 @@
 using ApiProdutos.Repositories;
 using ApiProdutos.Business;
 using Microsoft.AspNetCore.Mvc;
+using ApiProdutos.DTOs;
 
 namespace ApiProdutos.Controllers
 {
@@ -17,19 +18,19 @@ namespace ApiProdutos.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Subcategoria> Get([FromRoute] long id)
+        public ActionResult<SubcategoriaDTO> Get([FromRoute] long id)
         {
             return Ok(_business.Get(id));
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Subcategoria>> GetAll()
+        public ActionResult<IEnumerable<SubcategoriaDTO>> GetAll()
         {
             return Ok(_business.GetAll());
         }
 
         [HttpPost]
-        public ActionResult<Subcategoria> Post([FromBody] Subcategoria subcategoria)
+        public ActionResult<SubcategoriaDTO> Post([FromBody] SubcategoriaDTO subcategoria)
         {
             if (subcategoria is null) return BadRequest("Dados inválidos");
 
@@ -37,7 +38,7 @@ namespace ApiProdutos.Controllers
         }
 
         [HttpPut]
-        public ActionResult<Subcategoria> Put([FromBody] Subcategoria subcategoria)
+        public ActionResult<SubcategoriaDTO> Put([FromBody] SubcategoriaDTO subcategoria)
         {
             if (subcategoria is null) return BadRequest("Dados inválidos");
 
@@ -45,7 +46,7 @@ namespace ApiProdutos.Controllers
         }
 
         [HttpDelete("{id}")]
-        public ActionResult<Subcategoria> Delete([FromRoute] long id)
+        public ActionResult<SubcategoriaDTO> Delete([FromRoute] long id)
         {
             if (_business.Get(id) is null) return BadRequest("Subcategoria não encontrada");
             

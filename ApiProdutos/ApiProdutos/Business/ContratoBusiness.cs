@@ -29,9 +29,13 @@ namespace ApiProdutos.Business
 
         public ContratoDTO Create(ContratoDTO contratoDto)
         {
+            DateTime time = DateTime.Now;
+
             var contrato = contratoDto.ToModel();
             Contrato ctr = _digval.RemoverEspaco(contrato);
             ctr.Representante = _digval.PrimeiraMaiuscula(ctr.Representante);
+
+            contrato.DataCadastro = time.ToUniversalTime();
 
             _uof.ContratoRepository.Create(ctr);
             _uof.Commit();

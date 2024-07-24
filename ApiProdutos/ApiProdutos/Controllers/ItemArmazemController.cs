@@ -1,4 +1,5 @@
 ﻿using ApiProdutos.Business;
+using ApiProdutos.DTOs;
 using ApiProdutos.Models;
 using ApiProdutos.Repositories;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -18,19 +19,19 @@ namespace ApiProdutos.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<ItemArmazem> Get([FromRoute] long id)
+        public ActionResult<ItemArmazemDTO> Get([FromRoute] long id)
         {
             return Ok(_business.Get(id));
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<ItemArmazem>> GetAll()
+        public ActionResult<IEnumerable<ItemArmazemDTO>> GetAll()
         {
             return Ok(_business.GetAll());
         }
 
         [HttpPost]
-        public ActionResult<ItemArmazem> Post([FromBody] ItemArmazem itemArmazem)
+        public ActionResult<ItemArmazemDTO> Post([FromBody] ItemArmazemDTO itemArmazem)
         {
             if (itemArmazem is null) return BadRequest("Dados inválidos");
 
@@ -38,7 +39,7 @@ namespace ApiProdutos.Controllers
         }
 
         [HttpPut]
-        public ActionResult<ItemArmazem> Put([FromBody] ItemArmazem itemArmazem)
+        public ActionResult<ItemArmazemDTO> Put([FromBody] ItemArmazemDTO itemArmazem)
         {
             if (itemArmazem is null) return BadRequest("Dados inválidos");
 
@@ -46,7 +47,7 @@ namespace ApiProdutos.Controllers
         }
 
         [HttpDelete("{id}")]
-        public ActionResult<ItemArmazem> Delete([FromRoute] long id)
+        public ActionResult<ItemArmazemDTO> Delete([FromRoute] long id)
         {
             if (_business.Get(id) is null) return BadRequest("Item do armazem não encontrado");
 

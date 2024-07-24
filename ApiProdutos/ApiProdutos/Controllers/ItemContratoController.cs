@@ -1,4 +1,5 @@
 ﻿using ApiProdutos.Business;
+using ApiProdutos.DTOs;
 using ApiProdutos.Models;
 using ApiProdutos.Repositories;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -18,19 +19,19 @@ namespace ApiProdutos.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<ItemContrato> Get([FromRoute] long id)
+        public ActionResult<ItemContratoDTO> Get([FromRoute] long id)
         {
            return Ok(_business.Get(id));
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<ItemContrato>> GetAll()
+        public ActionResult<IEnumerable<ItemContratoDTO>> GetAll()
         {
             return Ok(_business.GetAll());
         }
 
         [HttpPost]
-        public ActionResult<ItemContrato> Post([FromBody] ItemContrato itemContrato)
+        public ActionResult<ItemContratoDTO> Post([FromBody] ItemContratoDTO itemContrato)
         {
             if (itemContrato is null) return BadRequest("Dados inválidos");
 
@@ -38,7 +39,7 @@ namespace ApiProdutos.Controllers
         }
 
         [HttpPut]
-        public ActionResult<ItemContrato> Put([FromBody] ItemContrato itemContrato)
+        public ActionResult<ItemContratoDTO> Put([FromBody] ItemContratoDTO itemContrato)
         {
             if (itemContrato is null) return BadRequest("Dados inválidos");
 
@@ -46,7 +47,7 @@ namespace ApiProdutos.Controllers
         }
 
         [HttpDelete("{id}")]
-        public ActionResult<ItemContrato> Delete([FromRoute] long id)
+        public ActionResult<ItemContratoDTO> Delete([FromRoute] long id)
         {
             if (_business.Get(id) is null) return BadRequest("Item do contrato não encontrado");
 
