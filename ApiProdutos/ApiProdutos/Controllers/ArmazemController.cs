@@ -1,4 +1,5 @@
 ﻿using ApiProdutos.Business;
+using ApiProdutos.DTOs;
 using ApiProdutos.Models;
 using ApiProdutos.Repositories;
 using ApiProdutos.Validations;
@@ -19,19 +20,19 @@ namespace ApiProdutos.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Armazem> Get([FromRoute] long id)
+        public ActionResult<ArmazemDTO> Get([FromRoute] long id)
         {
             return Ok(_business.Get(id));
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Armazem>> GetAll()
+        public ActionResult<IEnumerable<ArmazemDTO>> GetAll()
         {
             return Ok(_business.GetAll());
         }
 
         [HttpPost]
-        public ActionResult<Armazem> Post([FromBody] Armazem armazem)
+        public ActionResult<ArmazemDTO> Post([FromBody] ArmazemDTO armazem)
         {
             if (armazem is null) return BadRequest("Dados inválidos");
 
@@ -39,7 +40,7 @@ namespace ApiProdutos.Controllers
         }
 
         [HttpPut]
-        public ActionResult<Armazem> Put([FromBody] Armazem armazem)
+        public ActionResult<ArmazemDTO> Put([FromBody] ArmazemDTO armazem)
         {
             if (armazem is null) return BadRequest("Dados inválidos");
 
@@ -47,7 +48,7 @@ namespace ApiProdutos.Controllers
         }
 
         [HttpDelete("{id}")]
-        public ActionResult<Armazem> Delete([FromRoute] long id)
+        public ActionResult<ArmazemDTO> Delete([FromRoute] long id)
         {
             if (_business.Get(id) is null) return BadRequest("Armazem não encontrado");
 

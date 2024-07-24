@@ -1,4 +1,6 @@
-﻿using ApiProdutos.Models;
+﻿using ApiProdutos.DTOs;
+using ApiProdutos.Extensions.DTOs;
+using ApiProdutos.Models;
 using ApiProdutos.Repositories;
 using ApiProdutos.Validations;
 
@@ -15,18 +17,20 @@ namespace ApiProdutos.Business
             _digval = digval;
         }
 
-        public Fornecedor Get(long id)
+        public FornecedorDTO Get(long id)
         {
-            return _uof.FornecedorRepository.Get(p => p.Id == id);
+            return _uof.FornecedorRepository.Get(p => p.Id == id).ToDTO();
         }
 
-        public IEnumerable<Fornecedor> GetAll()
+        public IEnumerable<FornecedorDTO> GetAll()
         {
-            return _uof.FornecedorRepository.GetAll();
+            return _uof.FornecedorRepository.GetAll().ToListDTO();
         }
 
-        public Fornecedor Create(Fornecedor fornecedor)
+        public FornecedorDTO Create(FornecedorDTO fornecedorDto)
         {
+            var fornecedor = fornecedorDto.ToModel();
+
             Fornecedor fnc = _digval.RemoverEspaco(fornecedor);
             fnc.RazaoSocial = _digval.PrimeiraMaiuscula(fnc.RazaoSocial);
             fnc.Fantasia = _digval.PrimeiraMaiuscula(fnc.Fantasia);
@@ -40,11 +44,13 @@ namespace ApiProdutos.Business
             _uof.FornecedorRepository.Create(fnc);
             _uof.Commit();
 
-            return fnc;
+            return fnc.ToDTO();
         }
 
-        public Fornecedor Update(Fornecedor fornecedor)
+        public FornecedorDTO Update(FornecedorDTO fornecedorDto)
         {
+            var fornecedor = fornecedorDto.ToModel();
+
             fornecedor.RazaoSocial = _digval.PrimeiraMaiuscula(fornecedor.RazaoSocial);
             fornecedor.Fantasia = _digval.PrimeiraMaiuscula(fornecedor.Fantasia);
             fornecedor.Logradouro = _digval.PrimeiraMaiuscula(fornecedor.Logradouro);
@@ -57,15 +63,15 @@ namespace ApiProdutos.Business
             _uof.FornecedorRepository.Update(fornecedor);
             _uof.Commit();
 
-            return fornecedor;
+            return fornecedor.ToDTO();
         }
 
-        public Fornecedor Delete(long id)
+        public FornecedorDTO Delete(long id)
         {
             _uof.FornecedorRepository.Delete(p => p.Id == id);
             _uof.Commit();
 
-            return _uof.FornecedorRepository.Get(p => p.Id == id);
+            return _uof.FornecedorRepository.Get(p => p.Id == id).ToDTO();
         }
     }
 }

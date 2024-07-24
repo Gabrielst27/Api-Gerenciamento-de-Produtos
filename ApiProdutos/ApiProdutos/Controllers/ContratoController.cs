@@ -1,4 +1,5 @@
 ﻿using ApiProdutos.Business;
+using ApiProdutos.DTOs;
 using ApiProdutos.Models;
 using ApiProdutos.Repositories;
 using ApiProdutos.Validations;
@@ -19,19 +20,19 @@ namespace ApiProdutos.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Contrato> Get([FromRoute] long id)
+        public ActionResult<ContratoDTO> Get([FromRoute] long id)
         {
             return Ok(_business.Get(id));
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Contrato>> GetAll()
+        public ActionResult<IEnumerable<ContratoDTO>> GetAll()
         {
             return Ok(_business.GetAll());
         }
 
         [HttpPost]
-        public ActionResult<Contrato> Post([FromBody] Contrato contrato)
+        public ActionResult<ContratoDTO> Post([FromBody] ContratoDTO contrato)
         {
             if (contrato is null) return BadRequest("Dados inválidos");
 
@@ -39,7 +40,7 @@ namespace ApiProdutos.Controllers
         }
 
         [HttpPut]
-        public ActionResult<Contrato> Put([FromBody] Contrato contrato)
+        public ActionResult<ContratoDTO> Put([FromBody] ContratoDTO contrato)
         {
             if (contrato is null) return BadRequest("Dados inválidos");
 
@@ -47,7 +48,7 @@ namespace ApiProdutos.Controllers
         }
 
         [HttpDelete("{id}")]
-        public ActionResult<Contrato> Delete([FromRoute] long id)
+        public ActionResult<ContratoDTO> Delete([FromRoute] long id)
         {
             if (_business.Get(id) is null) return BadRequest("Contrato não encontrado");
             

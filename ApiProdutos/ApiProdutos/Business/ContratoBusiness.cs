@@ -1,4 +1,6 @@
-﻿using ApiProdutos.Models;
+﻿using ApiProdutos.DTOs;
+using ApiProdutos.Extensions.DTOs;
+using ApiProdutos.Models;
 using ApiProdutos.Repositories;
 using ApiProdutos.Validations;
 
@@ -15,43 +17,45 @@ namespace ApiProdutos.Business
             _digval = digval;
         }
 
-        public Contrato Get(long id)
+        public ContratoDTO Get(long id)
         {
-            return _uof.ContratoRepository.Get(p => p.Id == id);
+            return _uof.ContratoRepository.Get(p => p.Id == id).ToDTO();
         }
 
-        public IEnumerable<Contrato> GetAll()
+        public IEnumerable<ContratoDTO> GetAll()
         {
-            return _uof.ContratoRepository.GetAll();
+            return _uof.ContratoRepository.GetAll().ToListDTO();
         }
 
-        public Contrato Create(Contrato contrato)
+        public ContratoDTO Create(ContratoDTO contratoDto)
         {
+            var contrato = contratoDto.ToModel();
             Contrato ctr = _digval.RemoverEspaco(contrato);
             ctr.Representante = _digval.PrimeiraMaiuscula(ctr.Representante);
 
             _uof.ContratoRepository.Create(ctr);
             _uof.Commit();
 
-            return ctr;
+            return ctr.ToDTO();
         }
 
-        public Contrato Update(Contrato contrato)
+        public ContratoDTO Update(ContratoDTO contratoDto)
         {
+            var contrato = contratoDto.ToModel();
             contrato.Representante = _digval.PrimeiraMaiuscula(contrato.Representante);
 
             _uof.ContratoRepository.Update(contrato);
             _uof.Commit();
 
-            return contrato;
+            return contrato.ToDTO();
         }
 
-        public Contrato Delete(long id)
+        public ContratoDTO Delete(long id)
         {
             _uof.ContratoRepository.Delete(p => p.Id == id);
             _uof.Commit();
 
-            return _uof.ContratoRepository.Get(p => p.Id == id);
+            return _uof.ContratoRepository.Get(p => p.Id == id).ToDTO();
         }
     }
 }

@@ -1,12 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ApiProdutos.Models;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace ApiProdutos.Models
+namespace ApiProdutos.DTOs
 {
-
-    [Table("item_contratos")]
-    public class ItemContrato
+    public class ItemContratoDTO
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

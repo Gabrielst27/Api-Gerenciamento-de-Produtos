@@ -1,4 +1,6 @@
-﻿using ApiProdutos.Models;
+﻿using ApiProdutos.DTOs;
+using ApiProdutos.Extensions.DTOs;
+using ApiProdutos.Models;
 using ApiProdutos.Repositories;
 using ApiProdutos.Validations;
 
@@ -15,43 +17,55 @@ namespace ApiProdutos.Business
             _digval = digval;
         }
 
-        public Armazem Get(long id)
+        public ArmazemDTO Get(long id)
         {
-            return _uof.ArmazemRepository.Get(p => p.Id == id);
+            var armazem =  _uof.ArmazemRepository.Get(p => p.Id == id);
+            return armazem.ToDTO();
         }
 
-        public IEnumerable<Armazem> GetAll()
+        public IEnumerable<ArmazemDTO> GetAll()
         {
-            return _uof.ArmazemRepository.GetAll();
+            var armazem = _uof.ArmazemRepository.GetAll();
+            return armazem.ToListDTO();
         }
 
-        public Armazem Create(Armazem armazem)
+        public ArmazemDTO Create(ArmazemDTO armazemDto)
         {
+            DateTime time = DateTime.Now;
+
+            var armazem = armazemDto.ToModel();
+
             Armazem amz = _digval.RemoverEspaco(armazem);
             amz.Nome = _digval.PrimeiraMaiuscula(amz.Nome);
+
+            amz.DataCadastro = time.ToUniversalTime();
 
             _uof.ArmazemRepository.Create(amz);
             _uof.Commit();
 
-            return amz;
+            return amz.ToDTO();
         }
 
-        public Armazem Update(Armazem armazem)
+        public ArmazemDTO Update(ArmazemDTO armazemDto)
         {
+            var armazem = armazemDto.ToModel();
+
             armazem.Nome = _digval.PrimeiraMaiuscula(armazem.Nome);
 
             _uof.ArmazemRepository.Update(armazem);
             _uof.Commit();
 
-            return armazem;
+            return armazem.ToDTO();
         }
 
-        public Armazem Delete(long id)
+        public ArmazemDTO Delete(long id)
         {
+            var armazem = _uof.ArmazemRepository.Get(a => a.Id == id);
+
             _uof.ArmazemRepository.Delete(p => p.Id == id);
             _uof.Commit();
 
-            return _uof.ArmazemRepository.Get(p => p.Id == id);
+            return armazem.ToDTO();
         }
     }
 }

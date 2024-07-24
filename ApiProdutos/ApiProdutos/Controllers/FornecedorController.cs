@@ -1,4 +1,5 @@
 ﻿using ApiProdutos.Business;
+using ApiProdutos.DTOs;
 using ApiProdutos.Models;
 using ApiProdutos.Repositories;
 using ApiProdutos.Validations;
@@ -20,19 +21,19 @@ namespace ApiProdutos.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Fornecedor> Get([FromRoute] long id)
+        public ActionResult<FornecedorDTO> Get([FromRoute] long id)
         {
             return Ok(_business.Get(id));
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Fornecedor>> GetAll()
+        public ActionResult<IEnumerable<FornecedorDTO>> GetAll()
         {
             return Ok(_business.GetAll());
         }
 
         [HttpPost]
-        public ActionResult<Fornecedor> Post([FromBody] Fornecedor fornecedor)
+        public ActionResult<FornecedorDTO> Post([FromBody] FornecedorDTO fornecedor)
         {
             if (fornecedor is null) return BadRequest("Dados inválidos");
 
@@ -40,7 +41,7 @@ namespace ApiProdutos.Controllers
         }
 
         [HttpPut]
-        public ActionResult<Fornecedor> Put([FromBody] Fornecedor fornecedor)
+        public ActionResult<FornecedorDTO> Put([FromBody] FornecedorDTO fornecedor)
         {
             if (fornecedor is null) return BadRequest("Dados inválidos");
 
@@ -48,7 +49,7 @@ namespace ApiProdutos.Controllers
         }
 
         [HttpDelete("{id}")]
-        public ActionResult<Fornecedor> Delete([FromRoute] long id)
+        public ActionResult<FornecedorDTO> Delete([FromRoute] long id)
         {
             if (_business.Get(id) is null) return BadRequest("Fornecedor não encontrado");
             
