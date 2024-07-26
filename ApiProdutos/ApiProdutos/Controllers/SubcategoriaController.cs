@@ -3,6 +3,7 @@ using ApiProdutos.Repositories;
 using ApiProdutos.Business;
 using Microsoft.AspNetCore.Mvc;
 using ApiProdutos.DTOs;
+using ApiProdutos.Pagination;
 
 namespace ApiProdutos.Controllers
 {
@@ -21,6 +22,12 @@ namespace ApiProdutos.Controllers
         public ActionResult<SubcategoriaDTO> Get([FromRoute] long id)
         {
             return Ok(_business.Get(id));
+        }
+
+        [HttpGet("pagination")]
+        public ActionResult<IEnumerable<SubcategoriaDTO>> GetPag([FromQuery] GenericParameters genericParameters)
+        {
+            return Ok(_business.GetPag(genericParameters));
         }
 
         [HttpGet]

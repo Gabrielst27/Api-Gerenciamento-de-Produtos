@@ -1,5 +1,6 @@
 ﻿using ApiProdutos.Context;
 using ApiProdutos.Models;
+using ApiProdutos.Pagination;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
@@ -17,6 +18,13 @@ namespace ApiProdutos.Repositories
         public T? Get(Expression<Func<T, bool>> predicate)
         {
             return _context.Set<T>().AsNoTracking().FirstOrDefault(predicate);
+        }
+
+        public IEnumerable<T> GetPag(GenericParameters genericParameters)
+        {
+            return GetAll()
+                .Skip((genericParameters.PageNumber - 1) * genericParameters.PageSize)
+                .Take(genericParameters.PageSize).ToList();
         }
 
         public IEnumerable<T?> GetAll()

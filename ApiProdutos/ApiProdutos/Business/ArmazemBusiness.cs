@@ -1,6 +1,7 @@
 ﻿using ApiProdutos.DTOs;
 using ApiProdutos.Extensions.DTOs;
 using ApiProdutos.Models;
+using ApiProdutos.Pagination;
 using ApiProdutos.Repositories;
 using ApiProdutos.Validations;
 
@@ -21,6 +22,12 @@ namespace ApiProdutos.Business
         {
             var armazem =  _uof.ArmazemRepository.Get(p => p.Id == id);
             return armazem.ToDTO();
+        }
+
+        public IEnumerable<ArmazemDTO> GetPag(GenericParameters genericParameters)
+        {
+            var armazens = _uof.ArmazemRepository.GetPag(genericParameters);
+            return armazens.ToListDTO();
         }
 
         public IEnumerable<ArmazemDTO> GetAll()

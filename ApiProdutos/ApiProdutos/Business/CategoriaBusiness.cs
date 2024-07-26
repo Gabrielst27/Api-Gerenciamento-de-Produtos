@@ -1,6 +1,7 @@
 ﻿using ApiProdutos.DTOs;
 using ApiProdutos.Extensions.DTOs;
 using ApiProdutos.Models;
+using ApiProdutos.Pagination;
 using ApiProdutos.Repositories;
 using ApiProdutos.Validations;
 
@@ -22,6 +23,12 @@ namespace ApiProdutos.Business
             var categoria = _uof.CategoriaRepository.Get(p => p.Id == id);
             return categoria.ToDTO();
             
+        }
+
+        public IEnumerable<CategoriaDTO> GetPag(GenericParameters genericParameters)
+        {
+            var categorias = _uof.CategoriaRepository.GetPag(genericParameters);
+            return categorias.ToListDTO();
         }
 
         public IEnumerable<CategoriaDTO> GetAll()

@@ -1,6 +1,7 @@
 ﻿using ApiProdutos.DTOs;
 using ApiProdutos.Extensions.DTOs;
 using ApiProdutos.Models;
+using ApiProdutos.Pagination;
 using ApiProdutos.Repositories;
 using ApiProdutos.Validations;
 
@@ -21,7 +22,13 @@ namespace ApiProdutos.Business
         {
             return _uof.ProdutoRepository.Get(p => p.Id == id).ToDTO();
         }
-        
+
+        public IEnumerable<ProdutoDTO> GetPag(GenericParameters genericParameters)
+        {
+            var produtos = _uof.ProdutoRepository.GetPag(genericParameters);
+            return produtos.ToListDTO();
+        }
+
         public IEnumerable<ProdutoDTO> GetAll()
         {
             return _uof.ProdutoRepository.GetAll().ToListDTO();

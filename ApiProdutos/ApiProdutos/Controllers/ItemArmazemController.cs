@@ -1,6 +1,7 @@
 ﻿using ApiProdutos.Business;
 using ApiProdutos.DTOs;
 using ApiProdutos.Models;
+using ApiProdutos.Pagination;
 using ApiProdutos.Repositories;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -22,6 +23,12 @@ namespace ApiProdutos.Controllers
         public ActionResult<ItemArmazemDTO> Get([FromRoute] long id)
         {
             return Ok(_business.Get(id));
+        }
+
+        [HttpGet("pagination")]
+        public ActionResult<IEnumerable<ItemArmazemDTO>> GetPag([FromQuery] GenericParameters genericParameters)
+        {
+            return Ok(_business.GetPag(genericParameters));
         }
 
         [HttpGet]

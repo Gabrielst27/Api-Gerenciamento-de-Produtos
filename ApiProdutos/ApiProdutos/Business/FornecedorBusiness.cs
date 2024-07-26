@@ -1,6 +1,7 @@
 ﻿using ApiProdutos.DTOs;
 using ApiProdutos.Extensions.DTOs;
 using ApiProdutos.Models;
+using ApiProdutos.Pagination;
 using ApiProdutos.Repositories;
 using ApiProdutos.Validations;
 
@@ -20,6 +21,12 @@ namespace ApiProdutos.Business
         public FornecedorDTO Get(long id)
         {
             return _uof.FornecedorRepository.Get(p => p.Id == id).ToDTO();
+        }
+
+        public IEnumerable<FornecedorDTO> GetPag(GenericParameters genericParameters)
+        {
+            var fornecedores = _uof.FornecedorRepository.GetPag(genericParameters);
+            return fornecedores.ToListDTO();
         }
 
         public IEnumerable<FornecedorDTO> GetAll()

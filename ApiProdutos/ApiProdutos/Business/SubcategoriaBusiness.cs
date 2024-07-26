@@ -1,6 +1,7 @@
 ﻿using ApiProdutos.DTOs;
 using ApiProdutos.Extensions.DTOs;
 using ApiProdutos.Models;
+using ApiProdutos.Pagination;
 using ApiProdutos.Repositories;
 using ApiProdutos.Validations;
 
@@ -20,6 +21,12 @@ namespace ApiProdutos.Business
         public SubcategoriaDTO Get(long id)
         {
             return _uof.SubcategoriaRepository.Get(p => p.Id == id).ToDTO();
+        }
+
+        public IEnumerable<SubcategoriaDTO> GetPag(GenericParameters genericParameters)
+        {
+            var subcategorias = _uof.SubcategoriaRepository.GetPag(genericParameters);
+            return subcategorias.ToListDTO();
         }
 
         public IEnumerable<SubcategoriaDTO> GetAll()

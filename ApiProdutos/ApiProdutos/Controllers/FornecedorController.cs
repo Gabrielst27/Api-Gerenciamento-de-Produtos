@@ -1,6 +1,7 @@
 ﻿using ApiProdutos.Business;
 using ApiProdutos.DTOs;
 using ApiProdutos.Models;
+using ApiProdutos.Pagination;
 using ApiProdutos.Repositories;
 using ApiProdutos.Validations;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -24,6 +25,12 @@ namespace ApiProdutos.Controllers
         public ActionResult<FornecedorDTO> Get([FromRoute] long id)
         {
             return Ok(_business.Get(id));
+        }
+
+        [HttpGet("pagination")]
+        public ActionResult<IEnumerable<FornecedorDTO>> GetPag([FromQuery] GenericParameters genericParameters)
+        {
+            return Ok(_business.GetPag(genericParameters));
         }
 
         [HttpGet]
